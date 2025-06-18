@@ -1,68 +1,134 @@
+/* ICONOS */
+@import "@flaticon/flaticon-uicons/css/all/all";
+
+/* ESTILOS GENERALES */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Basicos */
+  --color-primary: #283949;
+  --color-secondary: #5482a3;
+  --color-tertiary: #eaeff4;
+  --color-background: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-text: #1d2834;
+  --color-muted-text: #759dbb;
+  --color-border: #cfdce8;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Acciones */
+  --color-success: #2dd55b;
+  --color-warning: #e7a899;
+  --color-error: #c5000f;
+  --color-info: #5482a3;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+* {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Estilos generales del cuerpo */
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Tipografía */
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
+h2 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-size: 2rem;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+h3 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-size: 1.75rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+h4 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+h5 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-size: 1.25rem;
+  color: var(--color-muted-text);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+h6 {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-size: 1rem;
+  color: var(--color-muted-text);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+/* PÁRRAFOS */
+p {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* TEXTO PEQUEÑO (pequeñas aclaraciones, copyright) */
+small {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--color-muted-text);
+}
+
+/* BOTONES */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 1rem;
+  color: var(--color-surface);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: var(--color-secondary);
 }
