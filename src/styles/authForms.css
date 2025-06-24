@@ -1,0 +1,41 @@
+.container {
+  text-align: center;
+  border: 1px solid var(--color-primary);
+  margin-top: 20px;
+  height: 610px;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-surface);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+span {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.container form {
+  width: auto;
+}
+
+.link {
+  display: flex;
+  flex-direction: row;
+}
+
+.link a {
+  margin-left: 5px;
+  color: var(--color-primary);
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}

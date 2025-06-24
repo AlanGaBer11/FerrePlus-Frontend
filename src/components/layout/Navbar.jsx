@@ -26,7 +26,9 @@ const Navbar = () => {
             <li>
               <Link to="/movements">Movimientos</Link>
             </li>
-            <button>Registrate</button>
+            <Link to={"/signup"}>
+              <button>Registrate</button>
+            </Link>
           </ul>
         </nav>
       </header>
