@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "../../styles/authForms.css";
 import { Link } from "react-router";
 import ReCAPTCHA from "react-google-recaptcha";
+import ToastService from "../../services/toast/ToastService";
 
 const SignUpForm = () => {
   // LEER VARIABE DE ENTORNO
@@ -26,7 +27,7 @@ const SignUpForm = () => {
   // FUNCIÓN PARA MANEJAR EL ENVÍO DEL FORMULARIO
   async function submitForm(event) {
     event.preventDefault();
-    alert("Datos enviados");
+    ToastService.success("Datos enviados");
     console.log("Datos enviados:", data);
 
     // VALIDAR CAMPOS DEL FORMULARIO

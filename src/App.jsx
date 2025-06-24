@@ -1,13 +1,17 @@
-import "./App.css";
-import Navbar from "./components/layout/Navbar";
+import { BrowserRouter } from "react-router";
 import AppRouter from "./router/AppRouter";
+import Navbar from "./components/layout/Navbar";
+import ToastContainer from "./services/toast/ToastContainer";
 
 const App = () => {
   return (
-    <div>
+    <BrowserRouter>
       <Navbar />
-      <AppRouter />
-    </div>
+      <main>
+        <AppRouter />
+      </main>
+      <ToastContainer />
+    </BrowserRouter>
   );
 };
 

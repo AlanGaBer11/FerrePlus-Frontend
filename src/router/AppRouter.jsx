@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router";
-import SignUpForm from "../components/auth/SignupForm";
+import SignUpForm from "../components/auth/SignUpForm";
 import LoginForm from "../components/auth/LoginForm";
 const AppRouter = () => {
   return (
