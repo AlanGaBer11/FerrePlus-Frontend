@@ -46,7 +46,7 @@ const LoginForm = () => {
       if (UserService.isAdmin()) {
         navigate("/admin/dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       ToastService.error(error.message || "Error al iniciar sesión");
