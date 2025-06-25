@@ -50,3 +50,62 @@ ul {
   display: block;
   font-weight: 600;
 }
+
+/* Estilos para el menú de usuario */
+.user-menu-container {
+  position: relative;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-surface);
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 180px;
+  background-color: var(--color-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-dropdown li {
+  width: 100%;
+}
+
+.user-dropdown li a,
+.user-dropdown li button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+  color: var(--color-text);
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-dropdown li a:hover,
+.user-dropdown li button:hover {
+  background-color: var(--color-background-light);
+}
+
+/* Separador entre opciones */
+.user-dropdown li:not(:last-child) {
+  border-bottom: 1px solid var(--color-border);
+}

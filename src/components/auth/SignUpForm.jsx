@@ -1,14 +1,21 @@
 import { useRef, useState } from "react";
 import "../../styles/authForms.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router"; // Añadido useNavigate
 import ReCAPTCHA from "react-google-recaptcha";
 import ToastService from "../../services/toast/ToastService";
+import UserService from "../../services/users/UserService"; // Importando UserService
 
 const SignUpForm = () => {
   // LEER VARIABE DE ENTORNO
   const sitekey = import.meta.env.VITE_SITE_KEY;
   const recaptcha = useRef();
-  // ESTADO PARA EL FORMULARIO
+  const navigate = useNavigate(); // Para redireccionar después del registro
+
+  // ESTADO PARA EL FORMULARIO Y CARGA
+  const [loading, setLoading] = useState(false);
+  //ESTADO PARA CONTROLAR VISIBILIDAD DE CONTRASEÑA
+  const [shown, setShown] = useState(false);
+  // ESTADO PARA LOS CAMPOS DEL FORMULARIO
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -24,19 +31,69 @@ const SignUpForm = () => {
     });
   };
 
+  // FUNCIÓN PARA VALIDAR LA CONTRASEÑA
+  const validatePassword = () => {
+    if (data.password !== data.confirmPassword) {
+      ToastService.error("Las contraseñas no coinciden");
+      return false;
+    }
+    if (data.password.length < 8) {
+      ToastService.error("La contraseña debe tener al menos 8 caracteres");
+      return false;
+    }
+    return true;
+  };
+
+  // FUNCIÓN PARA TOGGLEAR VISIBILIDAD DE CONTRASEÑA
+  const togglePassword = () => {
+    setShown(!shown);
+  };
+
   // FUNCIÓN PARA MANEJAR EL ENVÍO DEL FORMULARIO
   async function submitForm(event) {
     event.preventDefault();
-    ToastService.success("Datos enviados");
-    console.log("Datos enviados:", data);
-
-    // VALIDAR CAMPOS DEL FORMULARIO
+    // VALIDAR CAMPOS REQUERIDOS
+    // VALIDAR CAPTCHA
     const captchaValue = recaptcha.current.getValue();
     if (!captchaValue) {
-      alert("Please verify the reCAPTCHA!");
-    } else {
-      // make form submission
-      alert("Form submission successful!");
+      ToastService.error("Por favor, verifica el reCAPTCHA");
+      return;
+    }
+
+    // Validar contraseñas
+    if (!validatePassword()) {
+      return;
+    }
+
+    // Preparar datos para envío
+    const userData = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      captcha: captchaValue,
+    };
+
+    try {
+      setLoading(true);
+
+      // Llamar al servicio de registro
+      const response = await UserService.register(userData);
+
+      ToastService.success("Registro exitoso. ¡Bienvenido!");
+
+      // Si el registro incluye el token, podemos guardar la sesión directamente
+      if (response.token) {
+        UserService.saveToken(response.token, response.user);
+        navigate("/dashboard"); // Redirigir a la página principal
+      } else {
+        // Si no incluye token, redirigir al login
+        navigate("/login");
+      }
+    } catch (error) {
+      ToastService.error(error.message || "Error al registrar usuario");
+      console.error("Error al registrar:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -67,9 +124,10 @@ const SignUpForm = () => {
           />
           <label htmlFor="email">Correo Electrónico</label>
         </div>
-        <div className="form-group">
+
+        <div className="form-group password-container">
           <input
-            type="password"
+            type={shown ? "text" : "password"}
             id="password"
             name="password"
             placeholder=""
@@ -77,19 +135,36 @@ const SignUpForm = () => {
             required
           />
           <label htmlFor="password">Contraseña</label>
+          <span className="toggle-password" onClick={togglePassword}>
+            {shown ? (
+              <i className="fi fi-rs-crossed-eye eye"></i>
+            ) : (
+              <i className="fi fi-rs-eye eye"></i>
+            )}
+          </span>
         </div>
-        <div className="form-group">
+        <div className="form-group password-container">
           <input
-            type="password"
+            type={shown ? "text" : "password"}
             id="confirm-password"
-            name="confirm-password"
+            name="confirmPassword"
             placeholder=""
             onChange={handleChange}
             required
           />
+
           <label htmlFor="confirm-password">Confirmar Contraseña</label>
+          <span className="toggle-password" onClick={togglePassword}>
+            {shown ? (
+              <i className="fi fi-rs-crossed-eye eye"></i>
+            ) : (
+              <i className="fi fi-rs-eye eye"></i>
+            )}
+          </span>
         </div>
-        <button type="submit">Registrarse</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registrando..." : "Registrarse"}
+        </button>
         <ReCAPTCHA ref={recaptcha} sitekey={sitekey} />
       </form>
       <div className="link">

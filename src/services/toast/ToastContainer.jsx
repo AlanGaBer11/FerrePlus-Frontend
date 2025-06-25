@@ -13,21 +13,6 @@ const ToastContainer = () => {
           color: "var(--color-text)",
           border: "1px solid var(--color-border)",
         },
-        // Configuración específica para cada tipo de toast
-        success: {
-          duration: 3000,
-          iconTheme: {
-            primary: "var(--color-success)",
-            secondary: "white",
-          },
-        },
-        error: {
-          duration: 4000,
-          iconTheme: {
-            primary: "var(--color-error)",
-            secondary: "white",
-          },
-        },
       }}
     />
   );

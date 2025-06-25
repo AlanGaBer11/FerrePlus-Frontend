@@ -1,17 +1,23 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import "../../styles/authForms.css";
-import { Link } from "react-router";
-import ReCAPTCHA from "react-google-recaptcha";
+import ToastService from "../../services/toast/ToastService";
+import UserService from "../../services/users/UserService";
 
 const LoginForm = () => {
-  // LEER VARIABE DE ENTORNO
-  const sitekey = import.meta.env.VITE_SITE_KEY;
-  const recaptcha = useRef();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [shown, setShown] = useState(false);
+
   // ESTADO PARA EL FORMULARIO
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  const togglePassword = () => {
+    setShown(!shown);
+  };
 
   // FUNCIÓN PARA MANEJAR LOS CAMBIOS EN LOS CAMPOS DEL FORMULARIO
   const handleChange = (e) => {
@@ -24,14 +30,29 @@ const LoginForm = () => {
   // FUNCIÓN PARA MANEJAR EL ENVIO DEL FORMULARIO
   async function submitForm(event) {
     event.preventDefault();
-    alert("Datos enviados");
-    console.log("Datos enviados:", data);
-    const captchaValue = recaptcha.current.getValue();
-    if (!captchaValue) {
-      alert("Please verify the reCAPTCHA!");
-    } else {
-      // make form submission
-      alert("Form submission successful!");
+
+    try {
+      setLoading(true);
+
+      // Llamar al servicio de inicio de sesión
+      const response = await UserService.login({
+        email: data.email,
+        password: data.password,
+      });
+
+      ToastService.success("Inicio de sesión exitoso");
+
+      // Redireccionar según el rol del usuario
+      if (UserService.isAdmin()) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      ToastService.error(error.message || "Error al iniciar sesión");
+      console.error("Error en login:", error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -51,26 +72,35 @@ const LoginForm = () => {
           />
           <label htmlFor="email">Correo Electónico</label>
         </div>
-        <div className="form-group">
+        <div className="form-group password-container">
           <input
-            type="password"
+            type={shown ? "text" : "password"}
             id="password"
             name="password"
             placeholder=""
             onChange={handleChange}
             required
           />
-          <label htmlFor="password">Contraseña</label>
+
+          <label htmlFor="confirm-password">Contraseña</label>
+          <span className="toggle-password" onClick={togglePassword}>
+            {shown ? (
+              <i className="fi fi-rs-crossed-eye eye"></i>
+            ) : (
+              <i className="fi fi-rs-eye eye"></i>
+            )}
+          </span>
         </div>
-        <button type="submit">Iniciar Sesión</button>
-        <ReCAPTCHA ref={recaptcha} sitekey={sitekey} />
+        <button type="submit" disabled={loading}>
+          {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+        </button>
       </form>
       <div className="link">
         <span>¿No tienes cuenta?</span>
         <Link to="/signup">Crea una</Link>
       </div>
-      <div>
-        <a href="#forgot">¿Olvidaste tu contraseña?</a>
+      <div className="link">
+        <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
       </div>
     </div>
   );

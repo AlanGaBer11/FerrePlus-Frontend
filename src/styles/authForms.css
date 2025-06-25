@@ -22,6 +22,24 @@ span {
   width: auto;
 }
 
+.password-container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #888;
+}
+
+.eye:hover {
+  color: var(--color-primary);
+}
 .link {
   display: flex;
   flex-direction: row;

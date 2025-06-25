@@ -1,8 +1,50 @@
+import { useState, useEffect } from "react";
 import "../../styles/Navbar.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
+import UserService from "../../services/users/UserService";
 
 const Navbar = () => {
+  // Estado para controlar la autenticación y el usuario
+  const [isLoggedIn, setIsLoggedIn] = useState(UserService.isAuthenticated());
+  const [isAdmin, setIsAdmin] = useState(UserService.isAdmin());
+  const [userName, setUserName] = useState(UserService.getUserName());
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Efecto para actualizar el estado cuando cambia la autenticación
+  useEffect(() => {
+    // Función para actualizar el estado de autenticación
+    const checkAuthStatus = () => {
+      setIsLoggedIn(UserService.isAuthenticated());
+      setIsAdmin(UserService.isAdmin());
+      setUserName(UserService.getUserName());
+    };
+
+    // Configurar listener para cambios de autenticación
+    const unsubscribe = UserService.onAuthChange(() => {
+      checkAuthStatus();
+    });
+
+    // Limpiar al desmontar
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, []);
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    UserService.logout();
+    navigate("/login");
+    setShowUserMenu(false);
+  };
+
+  // Función para alternar el menú de usuario
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
   return (
     <div>
       <header>
@@ -26,9 +68,38 @@ const Navbar = () => {
             <li>
               <Link to="/movements">Movimientos</Link>
             </li>
-            <Link to={"/signup"}>
-              <button>Registrate</button>
-            </Link>
+
+            {/* Botones de autenticación */}
+            {!isLoggedIn ? (
+              <li>
+                <Link to="/signup">
+                  <button>Registrate</button>
+                </Link>
+              </li>
+            ) : (
+              <li className="user-menu-container">
+                <button className="user-button" onClick={toggleUserMenu}>
+                  {userName || "Usuario"}
+                  <i className="fi fi-br-angle-down"></i>
+                </button>
+
+                {showUserMenu && (
+                  <ul className="user-dropdown">
+                    <li>
+                      <Link to="/profile">Perfil</Link>
+                    </li>
+                    {isAdmin && (
+                      <li>
+                        <Link to="/dashboard">Dashboard</Link>
+                      </li>
+                    )}
+                    <li>
+                      <button onClick={handleLogout}>Cerrar Sesión</button>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            )}
           </ul>
         </nav>
       </header>
