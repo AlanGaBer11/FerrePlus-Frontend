@@ -111,7 +111,7 @@ const UserService = {
   // MÉTODO PARA OBTENER UN USUARIO POR ID
   async getUserById(userId) {
     try {
-      const response = await apiClient.get(`/users/${userId}`);
+      const response = await apiClient.get(`/users/getUser/${userId}`);
       return response.data;
     } catch (error) {
       throw this.handleError(error);
@@ -123,7 +123,7 @@ const UserService = {
   // MÉTODO PARA BORRAR UN USUARIO
   async deleteUser(userId) {
     try {
-      const response = await apiClient.delete(`/users/${userId}`);
+      const response = await apiClient.delete(`/users/deleteUser/${userId}`);
       return response.data;
     } catch (error) {
       throw this.handleError(error);

@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router";
 import SignUpForm from "../components/auth/SignUpForm";
 import LoginForm from "../components/auth/LoginForm";
+import Dashboard from "../pages/ADMIN/Dashboard";
 const AppRouter = () => {
   return (
     <Routes>
@@ -10,6 +11,7 @@ const AppRouter = () => {
       <Route path="/movements" element={<h1>Movements Page</h1>} />
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/admin/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };

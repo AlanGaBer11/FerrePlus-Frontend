@@ -1,41 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../../styles/Navbar.css";
 import { Link, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import UserService from "../../services/users/UserService";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
-  // Estado para controlar la autenticación y el usuario
-  const [isLoggedIn, setIsLoggedIn] = useState(UserService.isAuthenticated());
-  const [isAdmin, setIsAdmin] = useState(UserService.isAdmin());
-  const [userName, setUserName] = useState(UserService.getUserName());
-  const [showUserMenu, setShowUserMenu] = useState(false);
-
   const navigate = useNavigate();
-
-  // Efecto para actualizar el estado cuando cambia la autenticación
-  useEffect(() => {
-    // Función para actualizar el estado de autenticación
-    const checkAuthStatus = () => {
-      setIsLoggedIn(UserService.isAuthenticated());
-      setIsAdmin(UserService.isAdmin());
-      setUserName(UserService.getUserName());
-    };
-
-    // Configurar listener para cambios de autenticación
-    const unsubscribe = UserService.onAuthChange(() => {
-      checkAuthStatus();
-    });
-
-    // Limpiar al desmontar
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
-  }, []);
+  const { isLoggedIn, isAdmin, user } = useAuth();
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    UserService.logout();
+    UserService.logout(); // Llama al servicio y actualiza el contexto automáticamente
     navigate("/login");
     setShowUserMenu(false);
   };
@@ -69,7 +46,6 @@ const Navbar = () => {
               <Link to="/movements">Movimientos</Link>
             </li>
 
-            {/* Botones de autenticación */}
             {!isLoggedIn ? (
               <li>
                 <Link to="/signup">
@@ -79,7 +55,7 @@ const Navbar = () => {
             ) : (
               <li className="user-menu-container">
                 <button className="user-button" onClick={toggleUserMenu}>
-                  {userName || "Usuario"}
+                  {user?.name || "Usuario"}
                   <i className="fi fi-br-angle-down"></i>
                 </button>
 
