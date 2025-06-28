@@ -21,9 +21,12 @@ const AppRouter = () => {
       {/* RUTAS DE ADMINISTRADOR */}
       <Route path="/admin" element={<ProtectedRoute requiredRole={"ADMIN"} />}>
         <Route path="dashboard" element={<Dashboard />}>
-          <Route index />
-          <Route path="users" element={<h1> Admin Users Page</h1>} />
-          <Route path="suppliers" element={<h1>Admin Supppliers Page</h1>} />
+          <Route
+            index
+            element={<h1>Bienvenido al Panel de Administración</h1>}
+          />
+          <Route path="users" element={<h1>Admin Users Page</h1>} />
+          <Route path="suppliers" element={<h1>Admin Suppliers Page</h1>} />
           <Route path="products" element={<h1>Admin Products Page</h1>} />
           <Route path="movements" element={<h1>Admin Movements Page</h1>} />
         </Route>

@@ -1,39 +1,30 @@
-import { Outlet, Link } from "react-router";
+import { Outlet } from "react-router";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import AppSidebar from "../../components/AppSidebar";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-sidebar">
-        <h2>Panel de Admin</h2>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/admin/dashboard/users">Usuarios</Link>
-            </li>
-            <li>
-              <Link to="/admin/dashboard/products">Productos</Link>
-            </li>
-            <li>
-              <Link to="/admin/dashboard/suppliers">Proveedores</Link>
-            </li>
-            <li>
-              <Link to="/admin/dashboard/movements">Movimientos</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <SidebarProvider>
+      <div className="dashboard-container" style={{ display: "flex" }}>
+        <AppSidebar />
 
-      <div className="dashboard-content">
-        <h1>Dashboard</h1>
-        <p>Bienvenido al panel de administración.</p>
-        <p>
-          Aquí puedes gestionar usuarios, proveedores, productos y movimientos
-        </p>
-
-        {/* Aquí se renderizarán las rutas anidadas */}
-        <Outlet />
+        {/* Contenido principal */}
+        <div className="dashboard-content" style={{ flex: 1, padding: "20px" }}>
+          <SidebarTrigger /> {/* Botón para alternar el sidebar */}
+          {/* Aquí se renderizarán las rutas anidadas */}
+          <div
+            style={{
+              border: "1px solid #ccc",
+              padding: "20px",
+              margin: "20px 0",
+              textAlign: "center",
+            }}
+          >
+            <Outlet />
+          </div>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

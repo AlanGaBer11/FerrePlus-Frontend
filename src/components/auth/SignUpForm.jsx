@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router"; // Añadido useNavigate
 import ReCAPTCHA from "react-google-recaptcha";
 import ToastService from "../../services/toast/ToastService";
 import UserService from "../../services/users/UserService"; // Importando UserService
+import PasswordChecklist from "react-password-checklist";
 
 const SignUpForm = () => {
   // LEER VARIABE DE ENTORNO
@@ -134,6 +135,7 @@ const SignUpForm = () => {
             onChange={handleChange}
             required
           />
+
           <label htmlFor="password">Contraseña</label>
           <span className="toggle-password" onClick={togglePassword}>
             {shown ? (
@@ -143,6 +145,7 @@ const SignUpForm = () => {
             )}
           </span>
         </div>
+
         <div className="form-group password-container">
           <input
             type={shown ? "text" : "password"}
@@ -162,6 +165,20 @@ const SignUpForm = () => {
             )}
           </span>
         </div>
+        {/* CHECK PASSWORD - Corrección aquí */}
+        <PasswordChecklist
+          rules={["minLength", "specialChar", "number", "capital", "match"]}
+          minLength={8}
+          value={data.password}
+          valueAgain={data.confirmPassword}
+          messages={{
+            minLength: "La contraseña tiene más de 8 caracteres.",
+            specialChar: "La contraseña tiene caracteres especiales.",
+            number: "La contraseña tiene un número.",
+            capital: "La contraseña tiene una letra mayúscula.",
+            match: "Las contraseñas coinciden.",
+          }}
+        />
         <button type="submit" disabled={loading}>
           {loading ? "Registrando..." : "Registrarse"}
         </button>
