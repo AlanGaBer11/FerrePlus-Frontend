@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../styles/Navbar.css";
+import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router";
 import logo from "../../assets/logo.png";
 import UserService from "../../services/users/UserService";
@@ -49,7 +49,7 @@ const Navbar = () => {
             {!isLoggedIn ? (
               <li>
                 <Link to="/signup">
-                  <button>Registrate</button>
+                  <button>Regístrate</button>
                 </Link>
               </li>
             ) : (

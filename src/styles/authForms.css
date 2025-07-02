@@ -2,9 +2,8 @@
   text-align: center;
   border: 1px solid var(--color-primary);
   margin-top: 20px;
-  height: auto;
   width: 500px;
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: var(--color-surface);
@@ -40,6 +39,49 @@ span {
 .eye:hover {
   color: var(--color-primary);
 }
+
+.consent-checkbox {
+  display: flex;
+  align-items: flex-start;
+  margin: 16px 0;
+  position: relative;
+}
+
+.consent-checkbox input[type="checkbox"] {
+  margin-right: 10px;
+  margin-top: 3px; /* Alineación vertical con el texto */
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+}
+
+.consent-label {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+}
+
+.consent-label a {
+  color: #5482a3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.consent-label a:hover {
+  text-decoration: underline;
+}
+
+.text-link {
+  color: var(--color-primary);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
 .link {
   display: flex;
   flex-direction: row;

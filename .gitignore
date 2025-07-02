@@ -12,6 +12,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.certs
+react-cert.pem
+react-key.pem
 
 # Editor directories and files
 .vscode/*

@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import "../../styles/authForms.css";
 import { Link, useNavigate } from "react-router"; // Añadido useNavigate
 import ReCAPTCHA from "react-google-recaptcha";
 import ToastService from "../../services/toast/ToastService";
 import UserService from "../../services/users/UserService"; // Importando UserService
 import PasswordChecklist from "react-password-checklist";
+import MarkdownDialog from "../MarkdownDialog";
 
 const SignUpForm = () => {
   // LEER VARIABE DE ENTORNO
@@ -22,6 +23,7 @@ const SignUpForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    consent: false,
   });
 
   // FUNCIÓN PARA MANEJAR LOS CAMBIOS EN LOS CAMPOS DEL FORMULARIO
@@ -66,6 +68,14 @@ const SignUpForm = () => {
       return;
     }
 
+    // Validar consentimiento
+    if (!data.consent) {
+      ToastService.error(
+        "Debes aceptar los términos y condiciones para continuar"
+      );
+      return;
+    }
+
     // Preparar datos para envío
     const userData = {
       name: data.name,
@@ -78,18 +88,10 @@ const SignUpForm = () => {
       setLoading(true);
 
       // Llamar al servicio de registro
-      const response = await UserService.register(userData);
+      await UserService.register(userData);
 
       ToastService.success("Registro exitoso. ¡Bienvenido!");
-
-      // Si el registro incluye el token, podemos guardar la sesión directamente
-      if (response.token) {
-        UserService.saveToken(response.token, response.user);
-        navigate("/dashboard"); // Redirigir a la página principal
-      } else {
-        // Si no incluye token, redirigir al login
-        navigate("/login");
-      }
+      navigate("/login");
     } catch (error) {
       ToastService.error(error.message || "Error al registrar usuario");
       console.error("Error al registrar:", error);
@@ -165,7 +167,7 @@ const SignUpForm = () => {
             )}
           </span>
         </div>
-        {/* CHECK PASSWORD - Corrección aquí */}
+        {/* CHECK PASSWORD */}
         <PasswordChecklist
           rules={["minLength", "specialChar", "number", "capital", "match"]}
           minLength={8}
@@ -179,10 +181,42 @@ const SignUpForm = () => {
             match: "Las contraseñas coinciden.",
           }}
         />
+
+        {/* CHECKBOX DE CONSENTIMIENTO */}
+        <div className="consent-checkbox">
+          <input
+            type="checkbox"
+            id="consent"
+            name="consent"
+            checked={data.consent}
+            onChange={(e) => setData({ ...data, consent: e.target.checked })}
+            required
+          />
+          <label htmlFor="consent" className="consent-label">
+            He leído y acepto los{" "}
+            <MarkdownDialog
+              title="Términos y Condiciones"
+              contentPath="terms-conditions"
+              triggerElement={
+                <span className="text-link">Términos y Condiciones</span>
+              }
+            />{" "}
+            y la{" "}
+            <MarkdownDialog
+              title="Política de Privacidad"
+              contentPath="privacy-policy"
+              triggerElement={
+                <span className="text-link">Política de Privacidad</span>
+              }
+            />
+          </label>
+        </div>
+
+        <ReCAPTCHA ref={recaptcha} sitekey={sitekey} />
+
         <button type="submit" disabled={loading}>
           {loading ? "Registrando..." : "Registrarse"}
         </button>
-        <ReCAPTCHA ref={recaptcha} sitekey={sitekey} />
       </form>
       <div className="link">
         <span>¿Ya tienes cuenta?</span>

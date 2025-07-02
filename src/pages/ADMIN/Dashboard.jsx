@@ -9,7 +9,10 @@ const Dashboard = () => {
         <AppSidebar />
 
         {/* Contenido principal */}
-        <div className="dashboard-content" style={{ flex: 1, padding: "20px" }}>
+        <div
+          className="dashboard-content"
+          style={{ width: "auto", flex: 1, padding: "20px" }}
+        >
           <SidebarTrigger /> {/* Botón para alternar el sidebar */}
           {/* Aquí se renderizarán las rutas anidadas */}
           <div
