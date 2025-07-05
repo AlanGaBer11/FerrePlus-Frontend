@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import PropTypes from "prop-types";
 import {
   Dialog,
   DialogContent,
@@ -74,6 +75,11 @@ const MarkdownDialog = ({ title, contentPath, triggerElement }) => {
       </DialogContent>
     </Dialog>
   );
+};
+MarkdownDialog.propTypes = {
+  title: PropTypes.string.isRequired,
+  contentPath: PropTypes.string.isRequired,
+  triggerElement: PropTypes.node.isRequired,
 };
 
 export default MarkdownDialog;

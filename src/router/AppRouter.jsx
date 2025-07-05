@@ -5,7 +5,7 @@ import Dashboard from "../pages/ADMIN/Dashboard";
 import Unauthorized from "../pages/error/Unauthorized";
 import NotFound from "../pages/error/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
-import UserList from "@/components/users/userList";
+import UserList from "@/components/users/UserList";
 
 const AppRouter = () => {
   return (
@@ -18,6 +18,11 @@ const AppRouter = () => {
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route
+        path="/terms-conditions"
+        element={<h1>Terms and Conditions Page</h1>}
+      />
+      <Route path="privacy-policy" element={<h1>Privacy Policy Page</h1>} />
 
       {/* RUTAS DE ADMINISTRADOR */}
       <Route path="/admin" element={<ProtectedRoute requiredRole={"ADMIN"} />}>

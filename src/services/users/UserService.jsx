@@ -118,7 +118,28 @@ const UserService = {
     }
   },
 
+  // MÉTODO PARA CREAR UN NUEVO USUARIO
+  async createUser(userData) {
+    try {
+      const response = await apiClient.post("/users/createUser", userData);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
   // MÉTODO PARA ACTUALIZAR UN USUARIO
+  async updateUser(userId, userData) {
+    try {
+      const response = await apiClient.patch(
+        `/users/updateUser/${userId}`,
+        userData
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
 
   // MÉTODO PARA BORRAR UN USUARIO
   async deleteUser(userId) {

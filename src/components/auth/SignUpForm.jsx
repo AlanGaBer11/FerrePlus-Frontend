@@ -1,9 +1,9 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import "../../styles/authForms.css";
-import { Link, useNavigate } from "react-router"; // Añadido useNavigate
+import { Link, useNavigate } from "react-router";
 import ReCAPTCHA from "react-google-recaptcha";
 import ToastService from "../../services/toast/ToastService";
-import UserService from "../../services/users/UserService"; // Importando UserService
+import UserService from "../../services/users/UserService";
 import PasswordChecklist from "react-password-checklist";
 import MarkdownDialog from "../MarkdownDialog";
 
@@ -71,7 +71,7 @@ const SignUpForm = () => {
     // Validar consentimiento
     if (!data.consent) {
       ToastService.error(
-        "Debes aceptar los términos y condiciones para continuar"
+        "Debes ver y aceptar los términos y condiciones para continuar"
       );
       return;
     }

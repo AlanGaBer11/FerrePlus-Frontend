@@ -1,6 +1,7 @@
 import axios from "axios";
 import UserService from "../services/users/UserService";
 import ToastService from "../services/toast/ToastService";
+import Cookies from "js-cookie";
 
 const API_URL = import.meta.env.VITE_BASE_URL_LOCAL;
 
@@ -9,8 +10,9 @@ const AUTH_ROUTES = [
   /* USUARIOS */
   "/users/getUsers", // ADMIN
   "/users/getUser", // ADMIN
+  "/users/createUser", //ADMIN
   "/users/updateUser",
-  "/users/deleteUsser", // ADMIN
+  "/users/deleteUser", // ADMIN
 
   /* PROVEEDORES */
   "/suppliers/getSuppliers",
