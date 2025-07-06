@@ -46,11 +46,11 @@ const UserList = () => {
     fetchUsers();
   }, []); // Array vacío para que solo se ejecute una vez al montar el componente
 
-  // Función para eliminar usuario
+  // Función para eliminar un usuario
   const handleDelete = async (userId) => {
     if (
       window.confirm(
-        `¿Estás seguro que deseas eliminar al usuario ID: ${userId}?`
+        `¿Estás seguro que deseas eliminar al usuario con ID: ${userId}?`
       )
     ) {
       ToastService.promise(
@@ -77,17 +77,18 @@ const UserList = () => {
     <div className="list-container">
       <div className="top">
         <h1>Gestión de Usuarios</h1>
-        {loading && <p>Cargando...</p>}
-        {error && <p className="text-error">{error}</p>}
-
         <div>
           <CreateUserDialog onUserCreated={fetchUsers} />
         </div>
       </div>
+      {loading && <p>Cargando Usuarios...</p>}
+      {error && <p className="text-error">{error}</p>}
 
       {users && users.length > 0 ? (
         <Table>
-          <TableCaption>Lista de Usuarios</TableCaption>
+          <TableCaption style={{ marginTop: "10px" }}>
+            Lista de Usuarios
+          </TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">ID</TableHead>
@@ -107,7 +108,7 @@ const UserList = () => {
                 <TableCell>{user.role}</TableCell>
                 <TableCell>{user.verified ? "Sí" : "No"}</TableCell>
                 <TableCell>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 justify-center">
                     <UpdateUserDialog user={user} onUserUpdated={fetchUsers} />
                     <Button
                       className="delete-btn"

@@ -16,13 +16,13 @@ import ToastService from "@/services/toast/ToastService";
 
 const CreateUserDialog = ({ onUserCreated }) => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
     role: "",
   });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setData({
@@ -93,13 +93,13 @@ const CreateUserDialog = ({ onUserCreated }) => {
           Crear Usuario
         </Button>
       </DialogTrigger>
-      <DialogContent className=" p-2">
+      <DialogContent className="p-2">
         <DialogHeader className="pt-7">
           <DialogTitle className="text-center">Crear Usuario</DialogTitle>
         </DialogHeader>
         {/* FORMULARIO PARA CREAR UN USUARIO */}
         <div>
-          <form onSubmit={submitForm}>
+          <form>
             <div className="form-group">
               <input
                 type="text"
@@ -163,6 +163,7 @@ const CreateUserDialog = ({ onUserCreated }) => {
           </DialogClose>
           <Button
             type="submit"
+            onClick={submitForm}
             disabled={loading}
             style={{ marginRight: "22px" }}
           >
