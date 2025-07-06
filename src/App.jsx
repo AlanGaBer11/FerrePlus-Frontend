@@ -1,8 +1,8 @@
 import { BrowserRouter } from "react-router";
-import { AuthProvider } from "./context/AuthContext";
-import AppRouter from "./router/AppRouter";
-import Navbar from "./components/layout/Navbar";
-import ToastContainer from "./services/toast/ToastContainer";
+import { AuthProvider } from "@/context/AuthContext";
+import AppRouter from "@/router/AppRouter";
+import Navbar from "@/components/layout/Navbar";
+import ToastContainer from "@/components/ToastContainer";
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import "../../styles/error/errorPages.css";
+import "@/styles/errorPages.css";
 
 const Unauthorized = () => {
   return (

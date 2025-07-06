@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+import { useState } from "react";
 import {
   Home,
   Users,
@@ -14,9 +16,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "./ui/sidebar";
-import { Link } from "react-router";
-import { useState } from "react";
+} from "@/components/ui/sidebar";
 
 const AppSidebar = () => {
   // Estado para rastrear el ítem activo

@@ -1,7 +1,7 @@
 import axios from "axios";
-import UserService from "../services/users/UserService";
-import ToastService from "../services/toast/ToastService";
 import Cookies from "js-cookie";
+import UserService from "@/services/users/UserService";
+import ToastService from "@/services/toast/ToastService";
 
 const API_URL = import.meta.env.VITE_BASE_URL_LOCAL;
 
@@ -18,7 +18,7 @@ const AUTH_ROUTES = [
   "/suppliers/getSuppliers",
   "/suppliers/getSupplier",
   "/suppliers/createSupplier", // ADMIN
-  "suppliers/updateSupplier", // ADMIN
+  "/suppliers/updateSupplier", // ADMIN
   "/suppliers/deleteSupplier", // ADMIN
 
   /* PRODUCTOS */

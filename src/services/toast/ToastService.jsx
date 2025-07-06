@@ -1,4 +1,3 @@
-// Servicio para manejar notificaciones toast en toda la aplicación
 import toast from "react-hot-toast";
 
 // Objeto con funciones para mostrar diferentes tipos de toasts

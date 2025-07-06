@@ -1,11 +1,12 @@
 import { Routes, Route } from "react-router";
-import SignUpForm from "../components/auth/SignUpForm";
-import LoginForm from "../components/auth/LoginForm";
-import Dashboard from "../pages/ADMIN/Dashboard";
-import Unauthorized from "../pages/error/Unauthorized";
-import NotFound from "../pages/error/NotFound";
-import ProtectedRoute from "./ProtectedRoute";
-import UserList from "@/components/users/UserList";
+import ProtectedRoute from "@/router/ProtectedRoute";
+import SignUpForm from "@/components/auth/SignUpForm";
+import LoginForm from "@/components/auth/LoginForm";
+import Dashboard from "@/pages/ADMIN/Dashboard";
+import UserList from "@/pages/ADMIN/UserList";
+import SupplierList from "@/pages/ADMIN/SupplierList";
+import NotFound from "@/pages/error/NotFound";
+import Unauthorized from "@/pages/error/Unauthorized";
 
 const AppRouter = () => {
   return (
@@ -32,7 +33,7 @@ const AppRouter = () => {
             element={<h1>Bienvenido al Panel de Administración</h1>}
           />
           <Route path="users" element={<UserList />} />
-          <Route path="suppliers" element={<h1>Admin Suppliers Page</h1>} />
+          <Route path="suppliers" element={<SupplierList />} />
           <Route path="products" element={<h1>Admin Products Page</h1>} />
           <Route path="movements" element={<h1>Admin Movements Page</h1>} />
         </Route>

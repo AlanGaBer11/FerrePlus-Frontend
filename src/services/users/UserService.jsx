@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import apiClient from "../../interceptors/auth.interceptor";
+import apiClient from "@/interceptors/auth.interceptor";
 
 const UserService = {
   // Array para almacenar callbacks de cambio de autenticación

@@ -1,4 +1,5 @@
 import { Toaster } from "react-hot-toast";
+
 const ToastContainer = () => {
   return (
     <Toaster
@@ -12,6 +13,13 @@ const ToastContainer = () => {
           background: "var(--color-surface)",
           color: "var(--color-text)",
           border: "1px solid var(--color-border)",
+        },
+        // Agregar botón de cierre por defecto
+        dismissible: true,
+        closeButton: true,
+        closeButtonStyle: {
+          color: "var(--color-text)",
+          opacity: 0.7,
         },
       }}
     />

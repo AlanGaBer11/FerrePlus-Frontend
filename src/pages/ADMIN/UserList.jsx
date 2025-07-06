@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../../styles/list.css";
+import "@/styles/list.css";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCaption,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
+import { Button } from "../../components/ui/button";
 import CreateUserDialog from "@/components/users/CreateUserDialog";
 import UpdateUserDialog from "@/components/users/UpdateUserDialog";
 import UserService from "@/services/users/UserService";

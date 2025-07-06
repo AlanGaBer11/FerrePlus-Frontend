@@ -1,9 +1,9 @@
 import { useState } from "react";
-import "../../styles/navbar.css";
 import { Link, useNavigate } from "react-router";
-import logo from "../../assets/logo.png";
-import UserService from "../../services/users/UserService";
-import { useAuth } from "../../context/AuthContext";
+import "@/styles/navbar.css";
+import logo from "@/assets/logo.png";
+import UserService from "@/services/users/UserService";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
