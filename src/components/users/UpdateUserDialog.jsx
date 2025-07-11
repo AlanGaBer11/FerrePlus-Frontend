@@ -36,7 +36,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
     }
   }, [open, user]);
 
-  const handleChange = (e) => {
+  const handleUpdate = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
@@ -74,7 +74,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
 
           return response;
         } catch (error) {
-          console.error("Error al actualizar el usuario:", error);
+          console.error("Error al actualizar el usuario: ", error);
           throw error;
         } finally {
           setLoading(false);
@@ -99,7 +99,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
       </DialogTrigger>
       <DialogContent className="p-2">
         <DialogHeader className="pt-7">
-          <DialogTitle style={{ marginTop: "10px" }}>
+          <DialogTitle style={{ marginTop: "10px", textAlign: "center" }}>
             Actualizar Usuario
           </DialogTitle>
         </DialogHeader>
@@ -114,7 +114,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="name"
                 value={data.name}
                 placeholder=""
-                onChange={handleChange}
+                onChange={handleUpdate}
                 required
               />
               <label htmlFor="update-name">Nombre Completo</label>
@@ -127,7 +127,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="email"
                 value={data.email}
                 placeholder=""
-                onChange={handleChange}
+                onChange={handleUpdate}
                 required
               />
               <label htmlFor="update-email">Correo Electrónico</label>
@@ -140,7 +140,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="password"
                 value={data.password}
                 placeholder=""
-                onChange={handleChange}
+                onChange={handleUpdate}
               />
               <label htmlFor="update-password">
                 Nueva Contraseña (opcional)
@@ -152,7 +152,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="role"
                 id="update-role"
                 value={data.role}
-                onChange={handleChange}
+                onChange={handleUpdate}
                 required
               >
                 <option value="" disabled>

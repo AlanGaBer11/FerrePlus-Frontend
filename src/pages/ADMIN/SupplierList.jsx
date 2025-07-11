@@ -1,7 +1,142 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import "@/styles/list.css";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCaption,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import CreateSupplierDialog from "@/components/suppliers/CreateSupplierDialog";
+import UpdateSupplierDialog from "@/components/suppliers/UpdateSupplierDialog";
+import SupplierService from "@/services/suppliers/SupplierService";
+import ToastService from "@/services/toast/ToastService";
 
 const SupplierList = () => {
-  return <div></div>;
+  const [suppliers, setSuppliers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Cargar los proveedores al montar el componente
+  const fetchSuppliers = async () => {
+    try {
+      setLoading(true);
+      const response = await SupplierService.getAllSuppliers();
+      // Verificar si response.suppliers existe
+      if (response?.suppliers) {
+        setSuppliers(response.suppliers);
+      } else {
+        console.error("Formato de respuesta inesperado:", response);
+        setError("Formato de respuesta inesperado");
+        setSuppliers([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener los proveedores", error);
+      setError(error.message || "Error al obtener proveedores");
+      setSuppliers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuppliers();
+  }, []);
+
+  // Función para eliminar un proveedor
+  const handleDelete = async (supplierId) => {
+    if (
+      window.confirm(
+        `¿Estás seguro que deseas eliminar al proveedor con ID: ${supplierId}?`
+      )
+    ) {
+      ToastService.promise(
+        (async () => {
+          setLoading(true);
+          try {
+            await SupplierService.deleteSupplier(supplierId);
+            setSuppliers(
+              suppliers.filter(
+                (supplier) => supplier.id_supplier !== supplierId
+              )
+            );
+            return { success: true }; // Devolver un valor para indicar éxito
+          } finally {
+            setLoading(false);
+          }
+        })(),
+        {
+          loading: "Eliminando proveedor...",
+          success: "Proveedor eliminado correctamente",
+          error: "No se pudo eliminar el proveedor",
+        }
+      );
+    }
+  };
+
+  return (
+    <div className="list-container">
+      <div className="top">
+        <h1>Gestión de Proveedores</h1>
+        <div>
+          <CreateSupplierDialog onSupplierCreated={fetchSuppliers} />
+        </div>
+      </div>
+      {loading && <p>Cargando Proveedores...</p>}
+      {error && <p className="text-error">{error}</p>}
+
+      {suppliers && suppliers.length > 0 ? (
+        <Table>
+          <TableCaption style={{ marginTop: "10px" }}>
+            Lista de Proveedores
+          </TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-center">ID</TableHead>
+              <TableHead className="text-center">Nombre</TableHead>
+              <TableHead className="text-center">Teléfono</TableHead>
+              <TableHead className="text-center">Dirección</TableHead>
+              <TableHead className="text-center">Email</TableHead>
+              <TableHead className="text-center">Acciones</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {suppliers.map((supplier) => (
+              <TableRow key={supplier.id_supplier || supplier.email}>
+                <TableCell className="font-medium">
+                  {supplier.id_supplier}
+                </TableCell>
+                <TableCell>{supplier.name}</TableCell>
+                <TableCell>{supplier.phone}</TableCell>
+                <TableCell>{supplier.address}</TableCell>
+                <TableCell>{supplier.email}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2 justify-center">
+                    <UpdateSupplierDialog
+                      supplier={supplier}
+                      onSupplierUpdated={fetchSuppliers}
+                    />
+                    <Button
+                      className="delete-btn"
+                      onClick={() => handleDelete(supplier.id_supplier)}
+                      disabled={loading}
+                    >
+                      Eliminar
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        !loading && <p>No hay proveedores disponibles</p>
+      )}
+    </div>
+  );
 };
 
 export default SupplierList;
