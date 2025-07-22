@@ -36,7 +36,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
     }
   }, [open, user]);
 
-  const handleUpdate = (e) => {
+  const handleChange = (e) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
@@ -106,7 +106,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
 
         {/* FORMULARIO PARA ACTUALIZAR USUARIO */}
         <div>
-          <form onSubmit={submitForm}>
+          <form>
             <div className="form-group">
               <input
                 type="text"
@@ -114,7 +114,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="name"
                 value={data.name}
                 placeholder=""
-                onChange={handleUpdate}
+                onChange={handleChange}
                 required
               />
               <label htmlFor="update-name">Nombre Completo</label>
@@ -127,7 +127,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="email"
                 value={data.email}
                 placeholder=""
-                onChange={handleUpdate}
+                onChange={handleChange}
                 required
               />
               <label htmlFor="update-email">Correo Electrónico</label>
@@ -140,7 +140,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="password"
                 value={data.password}
                 placeholder=""
-                onChange={handleUpdate}
+                onChange={handleChange}
               />
               <label htmlFor="update-password">
                 Nueva Contraseña (opcional)
@@ -152,7 +152,7 @@ const UpdateUserDialog = ({ user, onUserUpdated }) => {
                 name="role"
                 id="update-role"
                 value={data.role}
-                onChange={handleUpdate}
+                onChange={handleChange}
                 required
               >
                 <option value="" disabled>

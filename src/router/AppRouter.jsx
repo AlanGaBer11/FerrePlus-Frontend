@@ -5,6 +5,7 @@ import LoginForm from "@/components/auth/LoginForm";
 import Dashboard from "@/pages/ADMIN/Dashboard";
 import UserList from "@/pages/ADMIN/UserList";
 import SupplierList from "@/pages/ADMIN/SupplierList";
+import ProductList from "@/pages/ADMIN/ProductList";
 import NotFound from "@/pages/error/NotFound";
 import Unauthorized from "@/pages/error/Unauthorized";
 
@@ -34,7 +35,7 @@ const AppRouter = () => {
           />
           <Route path="users" element={<UserList />} />
           <Route path="suppliers" element={<SupplierList />} />
-          <Route path="products" element={<h1>Admin Products Page</h1>} />
+          <Route path="products" element={<ProductList />} />
           <Route path="movements" element={<h1>Admin Movements Page</h1>} />
         </Route>
       </Route>
