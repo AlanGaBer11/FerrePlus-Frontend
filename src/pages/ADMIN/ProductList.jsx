@@ -88,35 +88,39 @@ const ProductList = () => {
 
       {products && products.length > 0 ? (
         <Table>
-          <TableCaption style={{ marginTop: "10px" }}>
+          <TableCaption className="table-caption">
             Lista de Productos
           </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">ID</TableHead>
-              <TableHead className="text-center">Nombre</TableHead>
-              <TableHead className="text-center">Categoria</TableHead>
-              <TableHead className="text-center">Precio</TableHead>
-              <TableHead className="text-center">Stock</TableHead>
-              <TableHead className="text-center">Proveedor</TableHead>
-              <TableHead className="text-center">Acciones</TableHead>
+              <TableHead className="table-head">ID</TableHead>
+              <TableHead className="table-head">Nombre</TableHead>
+              <TableHead className="table-head">Categoria</TableHead>
+              <TableHead className="table-head">Precio</TableHead>
+              <TableHead className="table-head">Stock</TableHead>
+              <TableHead className="table-head">Proveedor</TableHead>
+              <TableHead className="table-head">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {products.map((product) => (
-              <TableRow key={product.id_product || product.name}>
-                <TableCell className="font-medium">
+              <TableRow
+                className="table-row"
+                key={product.id_product || product.name}
+              >
+                <TableCell className=" table-cell font-medium">
                   {product.id_product}
                 </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell>${product.price}</TableCell>
-                <TableCell>{product.stock}</TableCell>
+                <TableCell className="table-cell">{product.name}</TableCell>
+                <TableCell className="table-cell">{product.category}</TableCell>
+                <TableCell className="table-cell">{product.category}</TableCell>
+                <TableCell className="table-cell">${product.price}</TableCell>
+                <TableCell className="table-cell">{product.stock}</TableCell>
                 <TableCell className="font-medium">
                   {product.supplier.name || "N/A"}
                 </TableCell>
                 <TableCell>
-                  <div className="flex gap-2 justify-center">
+                  <div className="flex gap-4 justify-center">
                     <UpdateProductDialog
                       product={product}
                       onProductUpdated={fetchProducts}

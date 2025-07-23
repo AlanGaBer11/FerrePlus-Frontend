@@ -95,7 +95,9 @@ const CreateUserDialog = ({ onUserCreated }) => {
       </DialogTrigger>
       <DialogContent className="p-2">
         <DialogHeader className="pt-7">
-          <DialogTitle className="text-center">Crear Usuario</DialogTitle>
+          <DialogTitle style={{ marginTop: "10px", textAlign: "center" }}>
+            Crear Usuario
+          </DialogTitle>
         </DialogHeader>
         {/* FORMULARIO PARA CREAR UN USUARIO */}
         <div>
@@ -155,11 +157,9 @@ const CreateUserDialog = ({ onUserCreated }) => {
           </form>
         </div>
         {/* FIN DEL FORMULARIO */}
-        <DialogFooter className=" m-1.5 p-2 rounded-lg">
+        <DialogFooter className="m-1.5 p-2 rounded-lg">
           <DialogClose asChild>
-            <Button type="button" className="cancel-btn">
-              Cancelar
-            </Button>
+            <Button className="cancel-btn">Cancelar</Button>
           </DialogClose>
           <Button
             type="submit"

@@ -86,29 +86,33 @@ const UserList = () => {
 
       {users && users.length > 0 ? (
         <Table>
-          <TableCaption style={{ marginTop: "10px" }}>
+          <TableCaption className="table-caption">
             Lista de Usuarios
           </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">ID</TableHead>
-              <TableHead className="text-center">Nombre</TableHead>
-              <TableHead className="text-center">Email</TableHead>
-              <TableHead className="text-center">Rol</TableHead>
-              <TableHead className="text-center">Verificado</TableHead>
-              <TableHead className="text-center">Acciones</TableHead>
+              <TableHead className="table-head">ID</TableHead>
+              <TableHead className="table-head">Nombre</TableHead>
+              <TableHead className="table-head">Email</TableHead>
+              <TableHead className="table-head">Rol</TableHead>
+              <TableHead className="table-head">Verificado</TableHead>
+              <TableHead className="table-head">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id_user || user.email}>
-                <TableCell className="font-medium">{user.id_user}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.role}</TableCell>
-                <TableCell>{user.verified ? "Sí" : "No"}</TableCell>
+              <TableRow className="table-row" key={user.id_user || user.email}>
+                <TableCell className=" table-cell font-medium">
+                  {user.id_user}
+                </TableCell>
+                <TableCell className="table-cell">{user.name}</TableCell>
+                <TableCell className="table-cell">{user.email}</TableCell>
+                <TableCell className="table-cell">{user.role}</TableCell>
+                <TableCell className="table-cell">
+                  {user.verified ? "Sí" : "No"}
+                </TableCell>
                 <TableCell>
-                  <div className="flex gap-2 justify-center">
+                  <div className="flex gap-4 justify-center">
                     <UpdateUserDialog user={user} onUserUpdated={fetchUsers} />
                     <Button
                       className="delete-btn"

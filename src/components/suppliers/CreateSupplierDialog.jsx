@@ -93,7 +93,9 @@ const CreateSupplierDialog = ({ onSupplierCreated }) => {
       </DialogTrigger>
       <DialogContent className="p-2">
         <DialogHeader className="p-7">
-          <DialogTitle className="text-center">Crear Provedor</DialogTitle>
+          <DialogTitle style={{ marginTop: "10px", textAlign: "center" }}>
+            Crear Provedor
+          </DialogTitle>
         </DialogHeader>
         {/* Formulario para crear un proveedor */}
         <div>

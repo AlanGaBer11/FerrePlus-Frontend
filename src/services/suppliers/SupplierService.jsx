@@ -62,29 +62,31 @@ const SupplierService = {
 
   // Método para manejar los errores de manera uniforme
   handleError(error) {
+    let errorMessage = "Error desconocido";
+    let errorStatus = null;
+
     if (error.response) {
       // El servidor respondió con un código de estado de error
       console.error("Error de respuesta:", error.response.data);
-      return {
-        success: false,
-        message: error.response.data.message || "Error en el servidor",
-        status: error.response.status,
-      };
+      errorMessage = error.response.data.message || "Error en el servidor";
+      errorStatus = error.response.status;
     } else if (error.request) {
       // La solicitud se hizo pero no se recibió respuesta
       console.error("Error de solicitud:", error.request);
-      return {
-        success: false,
-        message: "No se pudo conectar con el servidor",
-      };
+      errorMessage = "No se pudo conectar con el servidor";
     } else {
       // Ocurrió un error al configurar la solicitud
       console.error("Error:", error.message);
-      return {
-        success: false,
-        message: error.message,
-      };
+      errorMessage = error.message;
     }
+
+    // Crear y lanzar un nuevo error con el mensaje apropiado
+    const newError = new Error(errorMessage);
+    if (errorStatus) {
+      newError.status = errorStatus;
+    }
+
+    return newError; // Retorna el error para que sea lanzado con throw
   },
 };
 

@@ -9,14 +9,37 @@
 
   .top {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 600px;
+    width: 100%;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    gap: 20px;
   }
 
   .text-error {
     color: red;
     font-weight: bold;
+  }
+
+  .table-caption {
+    margin-top: 10px;
+  }
+
+  .table-head {
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-text);
+  }
+
+  .table-row {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+  }
+
+  .table-cell {
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 }

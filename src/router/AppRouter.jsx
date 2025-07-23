@@ -6,6 +6,7 @@ import Dashboard from "@/pages/ADMIN/Dashboard";
 import UserList from "@/pages/ADMIN/UserList";
 import SupplierList from "@/pages/ADMIN/SupplierList";
 import ProductList from "@/pages/ADMIN/ProductList";
+import MovementList from "@/pages/ADMIN/MovementList";
 import NotFound from "@/pages/error/NotFound";
 import Unauthorized from "@/pages/error/Unauthorized";
 
@@ -36,7 +37,7 @@ const AppRouter = () => {
           <Route path="users" element={<UserList />} />
           <Route path="suppliers" element={<SupplierList />} />
           <Route path="products" element={<ProductList />} />
-          <Route path="movements" element={<h1>Admin Movements Page</h1>} />
+          <Route path="movements" element={<MovementList />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

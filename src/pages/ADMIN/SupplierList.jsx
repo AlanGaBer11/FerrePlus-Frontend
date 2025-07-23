@@ -90,31 +90,34 @@ const SupplierList = () => {
 
       {suppliers && suppliers.length > 0 ? (
         <Table>
-          <TableCaption style={{ marginTop: "10px" }}>
+          <TableCaption className="table-caption">
             Lista de Proveedores
           </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">ID</TableHead>
-              <TableHead className="text-center">Nombre</TableHead>
-              <TableHead className="text-center">Teléfono</TableHead>
-              <TableHead className="text-center">Dirección</TableHead>
-              <TableHead className="text-center">Email</TableHead>
-              <TableHead className="text-center">Acciones</TableHead>
+              <TableHead className="table-head">ID</TableHead>
+              <TableHead className="table-head">Nombre</TableHead>
+              <TableHead className="table-head">Teléfono</TableHead>
+              <TableHead className="table-head">Dirección</TableHead>
+              <TableHead className="table-head">Email</TableHead>
+              <TableHead className="table-head">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {suppliers.map((supplier) => (
-              <TableRow key={supplier.id_supplier || supplier.email}>
-                <TableCell className="font-medium">
+              <TableRow
+                className="table-row"
+                key={supplier.id_supplier || supplier.email}
+              >
+                <TableCell className="table-cell font-medium">
                   {supplier.id_supplier}
                 </TableCell>
-                <TableCell>{supplier.name}</TableCell>
-                <TableCell>{supplier.phone}</TableCell>
-                <TableCell>{supplier.address}</TableCell>
-                <TableCell>{supplier.email}</TableCell>
+                <TableCell className="table-cell">{supplier.name}</TableCell>
+                <TableCell className="table-cell">{supplier.phone}</TableCell>
+                <TableCell className="table-cell">{supplier.address}</TableCell>
+                <TableCell className="table-cell">{supplier.email}</TableCell>
                 <TableCell>
-                  <div className="flex gap-2 justify-center">
+                  <div className="flex gap-4 justify-center">
                     <UpdateSupplierDialog
                       supplier={supplier}
                       onSupplierUpdated={fetchSuppliers}

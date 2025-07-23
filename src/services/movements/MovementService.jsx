@@ -1,32 +1,34 @@
 import apiClient from "@/interceptors/auth.interceptor";
 
-const ProductService = {
-  // Método para obtener todos los productos
-  async getAllProducts() {
+const MovementService = {
+  // Método para obtener todos los movimientos
+  async getAllMovements() {
     try {
-      const response = await apiClient.get("/products/getProducts");
+      const response = await apiClient.get("/movements/getMovements");
       return response.data;
     } catch (error) {
       throw this.handleError(error);
     }
   },
 
-  // Método para obtener un producto por ID
-  async getProductById(productId) {
+  // Método para obtener un movimiento por ID
+  async getMovementById(movementId) {
     try {
-      const response = apiClient.get(`/products/getProduct/${productId}`);
+      const response = await apiClient.get(
+        `/movements/getMovement/${movementId}`
+      );
       return response.data;
     } catch (error) {
       throw this.handleError(error);
     }
   },
 
-  // Método para crear un nuevo producto
-  async createProduct(productData) {
+  // Método para crear un nuevo movimiento
+  async createMovement(movementData) {
     try {
       const response = await apiClient.post(
-        "/products/createProduct",
-        productData
+        "/movements/createMovement",
+        movementData
       );
       return response.data;
     } catch (error) {
@@ -34,12 +36,12 @@ const ProductService = {
     }
   },
 
-  // Método para actualizar un producto
-  async updateProduct(productId, productData) {
+  // Método para actualizar un movimiento
+  async updateMovement(movementId, movementData) {
     try {
       const response = await apiClient.patch(
-        `/products/updateProduct/${productId}`,
-        productData
+        `/movements/updateMovement/${movementId}`,
+        movementData
       );
       return response.data;
     } catch (error) {
@@ -47,11 +49,11 @@ const ProductService = {
     }
   },
 
-  // Método para eliminar un producto
-  async deleteProduct(productId) {
+  // Método para eliminar un movimiento
+  async deleteMovement(movementId) {
     try {
       const response = await apiClient.delete(
-        `/products/deleteProduct/${productId}`
+        `/movements/deleteMovement/${movementId}`
       );
       return response.data;
     } catch (error) {
@@ -89,4 +91,4 @@ const ProductService = {
   },
 };
 
-export default ProductService;
+export default MovementService;
