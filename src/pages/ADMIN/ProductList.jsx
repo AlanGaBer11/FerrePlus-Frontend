@@ -113,9 +113,8 @@ const ProductList = () => {
                 </TableCell>
                 <TableCell className="table-cell">{product.name}</TableCell>
                 <TableCell className="table-cell">{product.category}</TableCell>
-                <TableCell className="table-cell">{product.category}</TableCell>
-                <TableCell className="table-cell">${product.price}</TableCell>
-                <TableCell className="table-cell">{product.stock}</TableCell>
+                <TableCell className="table-cell">{product.price}</TableCell>
+                <TableCell className="table-cell">${product.stock}</TableCell>
                 <TableCell className="font-medium">
                   {product.supplier.name || "N/A"}
                 </TableCell>

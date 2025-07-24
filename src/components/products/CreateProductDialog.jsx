@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Dialog,
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import ProductService from "@/services/products/ProductService";
+import useSupplierStore from "@/context/SupplierContext";
 import ToastService from "@/services/toast/ToastService";
 
 const CreateProductDialog = ({ onProductCreated }) => {
@@ -21,8 +22,19 @@ const CreateProductDialog = ({ onProductCreated }) => {
     category: "",
     price: "",
     stock: "",
-    id_supplier: "",
+    supplier_name: "",
   });
+  const {
+    suppliers,
+    loading: suppliersLoading,
+    fetchSuppliers,
+  } = useSupplierStore();
+
+  useEffect(() => {
+    if (open) {
+      fetchSuppliers();
+    }
+  }, [open, fetchSuppliers]);
 
   const handleChange = (e) => {
     setData({
@@ -37,6 +49,7 @@ const CreateProductDialog = ({ onProductCreated }) => {
       category: "",
       price: "",
       stock: "",
+      supplier_name: "",
     });
   };
 
@@ -49,7 +62,7 @@ const CreateProductDialog = ({ onProductCreated }) => {
       !data.category ||
       !data.price ||
       !data.stock ||
-      !data.id_supplier
+      !data.supplier_name
     ) {
       ToastService.error("Por favor completa todos los campos");
       return;
@@ -61,7 +74,7 @@ const CreateProductDialog = ({ onProductCreated }) => {
       category: data.category,
       price: data.price,
       stock: data.stock,
-      id_supplier: data.id_supplier,
+      supplier_name: data.supplier_name,
     };
 
     ToastService.promise(
@@ -155,16 +168,25 @@ const CreateProductDialog = ({ onProductCreated }) => {
               <label htmlFor="stock">Cantidad disponible </label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="id_supplier"
-                name="id_supplier"
-                value={data.id_supplier}
+              <select
+                id="supplier_name"
+                name="supplier_name"
+                value={data.supplier_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="id_supplier">Proveedor</label>
+                disabled={suppliersLoading}
+              >
+                <option value="">Seleccione un proveedor</option>
+                {suppliers.map((supplier) => (
+                  <option
+                    key={supplier.id_supplier}
+                    value={supplier.supplier_name}
+                  >
+                    {supplier.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="supplier_name">Proveedor</label>
             </div>
           </form>
         </div>

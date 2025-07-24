@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import ProductService from "@/services/products/ProductService";
+import useSupplierStore from "@/context/SupplierContext";
 import ToastService from "@/services/toast/ToastService";
 
 const UpdateProductDialog = ({ product, onProductUpdated }) => {
@@ -21,7 +22,7 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
     category: "",
     price: "",
     stock: "",
-    id_supplier: "",
+    supplier_name: "",
   });
 
   useEffect(() => {
@@ -31,10 +32,22 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
         category: product.category || "",
         price: product.price || "",
         stock: product.stock || "",
-        id_supplier: product.supplier?.id_supplier || "",
+        supplier_name: product.supplier?.name || "",
       });
     }
   }, [open, product]);
+
+  const {
+    suppliers,
+    loading: suppliersLoading,
+    fetchSuppliers,
+  } = useSupplierStore();
+
+  useEffect(() => {
+    if (open) {
+      fetchSuppliers();
+    }
+  }, [open, fetchSuppliers]);
 
   const handleChange = (e) => {
     setData({
@@ -47,7 +60,13 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
     event.preventDefault();
 
     //Validaciones básicas
-    if (!data.name || !data.category || !data.price || !data.stock) {
+    if (
+      !data.name ||
+      !data.category ||
+      !data.price ||
+      !data.stock ||
+      !data.supplier_name
+    ) {
       ToastService.error("Por favor completa todos los campos");
       return;
     }
@@ -57,7 +76,7 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
       category: data.category,
       price: parseFloat(data.price),
       stock: parseInt(data.stock, 10),
-      ...(data.id_supplier && { id_supplier: data.id_supplier }), // Solo incluir id_supplier si no está vacío
+      ...(data.supplier_name && { supplier_name: data.supplier_name }), // Solo incluir supplier_name si no está vacío
     };
 
     ToastService.promise(
@@ -158,16 +177,25 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
               <label htmlFor="update-stock">Cantidad disponible </label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="update-id_supplier"
-                name="id_supplier"
-                value={data.id_supplier}
+              <select
+                id="update-supplier_name"
+                name="supplier_name"
+                value={data.supplier_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="update-id_supplier">
+                disabled={suppliersLoading}
+              >
+                <option value="">Seleccione un proveedor</option>
+                {suppliers.map((supplier) => (
+                  <option
+                    key={supplier.id_supplier}
+                    value={supplier.supplier_name}
+                  >
+                    {supplier.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="update-supplier_name">
                 Proveedor (ID actual: {product?.supplier?.id_supplier} -{" "}
                 {product?.supplier?.name})
               </label>
