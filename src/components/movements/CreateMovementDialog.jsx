@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Dialog,
@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import MovementService from "@/services/movements/MovementService";
+import useProductStore from "@/context/ProductContwxt";
+import useUserStore from "@/context/UserContext";
 import ToastService from "@/services/toast/ToastService";
 
 const CreateMovementDialog = ({ onMovementCreated }) => {
@@ -21,9 +23,22 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
     quantity: "",
     date: "",
     comments: "",
-    id_product: "",
-    id_user: "",
+    product_name: "",
+    user_name: "",
   });
+  const {
+    products,
+    loading: productsLoading,
+    fetchProducts,
+  } = useProductStore();
+
+  const { users, loading: usersLoading, fetchUsers } = useUserStore();
+  useEffect(() => {
+    if (open) {
+      fetchProducts();
+      fetchUsers();
+    }
+  }, [open, fetchProducts, fetchUsers]);
 
   const handleChange = (e) => {
     setData({
@@ -38,8 +53,8 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
       quantity: "",
       date: "",
       comments: "",
-      id_product: "",
-      id_user: "",
+      product_name: "",
+      user_name: "",
     });
   };
 
@@ -53,8 +68,8 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
       !data.quantity ||
       !data.date ||
       !data.comments ||
-      !data.id_product ||
-      !data.id_user
+      !data.product_name ||
+      !data.user_name
     ) {
       ToastService.error("Por favor completa todos los campos");
       return;
@@ -66,8 +81,8 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
       quantity: data.quantity,
       date: data.date,
       comments: data.comments,
-      id_product: data.id_product,
-      id_user: data.id_user,
+      product_name: data.product_name,
+      user_name: data.user_name,
     };
 
     ToastService.promise(
@@ -165,28 +180,40 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
               <label htmlFor="comments">Comentarios</label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="id_product"
-                name="id_product"
-                value={data.id_product}
+              <select
+                id="product_name"
+                name="product_name"
+                value={data.product_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="id_product">Producto</label>
+                disabled={productsLoading}
+              >
+                <option value="">Seleccione un producto</option>
+                {products.map((product) => (
+                  <option key={product.id_product} value={product.product_name}>
+                    {product.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="product_name">Producto</label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="id_user"
-                name="id_user"
-                value={data.id_user}
+              <select
+                id="user_name"
+                name="user_name"
+                value={data.user_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="id_user">Usuario</label>
+                disabled={usersLoading}
+              >
+                <option value="">Seleccione un usuario</option>
+                {users.map((user) => (
+                  <option key={user.id_user} value={user.user_name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="user_name">Usuario</label>
             </div>
           </form>
         </div>

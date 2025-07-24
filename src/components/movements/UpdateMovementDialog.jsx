@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import ToastService from "@/services/toast/ToastService";
+import useProductStore from "@/context/ProductContwxt";
+import useUserStore from "@/context/UserContext";
 import MovementService from "@/services/movements/MovementService";
 
 const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
@@ -21,9 +23,23 @@ const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
     quantity: "",
     date: "",
     comments: "",
-    id_product: "",
-    id_user: "",
+    product_name: "",
+    user_name: "",
   });
+
+  const {
+    products,
+    loading: productsLoading,
+    fetchProducts,
+  } = useProductStore();
+
+  const { users, loading: usersLoading, fetchUsers } = useUserStore();
+  useEffect(() => {
+    if (open) {
+      fetchProducts();
+      fetchUsers();
+    }
+  }, [open, fetchProducts, fetchUsers]);
 
   useEffect(() => {
     if (open && movement) {
@@ -32,8 +48,8 @@ const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
         quantity: movement.quantity || "",
         date: movement.date || "",
         comments: movement.comments || "",
-        id_product: movement.product?.id_product || "",
-        id_user: movement.user?.id_user || "",
+        product_name: movement.product?.name || "",
+        user_name: movement.user?.name || "",
       });
     }
   }, [open, movement]);
@@ -54,8 +70,8 @@ const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
       !data.quantity ||
       !data.date ||
       !data.comments ||
-      !data.id_product ||
-      !data.id_user
+      !data.product_name ||
+      !data.user_name
     ) {
       ToastService.error("Por favor completa todos los campos");
       return;
@@ -66,8 +82,8 @@ const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
       quantity: parseInt(data.quantity, 10),
       date: data.date,
       comments: data.comments,
-      id_product: data.id_product,
-      id_user: data.id_user,
+      product_name: data.product_name,
+      user_name: data.user_name,
     };
 
     ToastService.promise(
@@ -172,31 +188,43 @@ const UpdateMovementDialog = ({ movement, onMovementUpdated }) => {
               <label htmlFor="update-comments">Comentarios</label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="update-id_product"
-                name="id_product"
-                value={data.id_product}
+              <select
+                id="update-product_name"
+                name="product_name"
+                value={data.product_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="update-id_product">
+                disabled={productsLoading}
+              >
+                <option value="">Seleccione un producto</option>
+                {products.map((product) => (
+                  <option key={product.id_product} value={product.product_name}>
+                    {product.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="update-product_name">
                 Producto (ID actual: {movement?.product?.id_product} -{" "}
                 {movement?.product?.name})
               </label>
             </div>
             <div className="form-group">
-              <input
-                type="number"
-                id="update-id_user"
-                name="id_user"
-                value={data.id_user}
+              <select
+                id="update-user_name"
+                name="user_name"
+                value={data.user_name}
                 onChange={handleChange}
-                placeholder=""
                 required
-              />
-              <label htmlFor="update-id_user">
+                disabled={usersLoading}
+              >
+                <option value="">Seleccione un usuario</option>
+                {users.map((user) => (
+                  <option key={user.id_user} value={user.user_name}>
+                    {user.name}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="update-user_name">
                 Usuario (ID actual: {movement?.user?.id_user} -{" "}
                 {movement?.user?.name})
               </label>
