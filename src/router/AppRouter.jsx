@@ -3,6 +3,7 @@ import ProtectedRoute from "@/router/ProtectedRoute";
 import SignUpForm from "@/components/auth/SignUpForm";
 import LoginForm from "@/components/auth/LoginForm";
 import Dashboard from "@/pages/ADMIN/Dashboard";
+import DashboardHome from "@/pages/ADMIN/DashboardHome";
 import UserList from "@/pages/ADMIN/UserList";
 import SupplierList from "@/pages/ADMIN/SupplierList";
 import ProductList from "@/pages/ADMIN/ProductList";
@@ -30,10 +31,7 @@ const AppRouter = () => {
       {/* RUTAS DE ADMINISTRADOR */}
       <Route path="/admin" element={<ProtectedRoute requiredRole={"ADMIN"} />}>
         <Route path="dashboard" element={<Dashboard />}>
-          <Route
-            index
-            element={<h1>Bienvenido al Panel de Administración</h1>}
-          />
+          <Route index element={<DashboardHome />} />
           <Route path="users" element={<UserList />} />
           <Route path="suppliers" element={<SupplierList />} />
           <Route path="products" element={<ProductList />} />

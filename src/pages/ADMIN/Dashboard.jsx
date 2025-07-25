@@ -12,13 +12,19 @@ const Dashboard = () => {
         <AppSidebar />
 
         {/* Contenido principal */}
-        <div className="dashboard-content" style={{ flex: 1, padding: "20px" }}>
-          <SidebarTrigger /> {/* Botón para alternar el sidebar */}
-          {/* Aquí se renderizarán las rutas anidadas */}
+        <div
+          className="dashboard-content"
+          style={{
+            flex: 1,
+            padding: "20px",
+          }}
+        >
+          {/* Boton para alternar la barra lateral */}
+          <SidebarTrigger />
           <div
             style={{
               border: "1px solid #ccc",
-              padding: "10px",
+              padding: "20px",
               margin: "10px 0",
               textAlign: "left",
             }}

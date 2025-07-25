@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import MovementService from "@/services/movements/MovementService";
-import useProductStore from "@/context/ProductContwxt";
+import useProductStore from "@/context/ProductContext";
 import useUserStore from "@/context/UserContext";
 import ToastService from "@/services/toast/ToastService";
 
