@@ -2,9 +2,11 @@ import apiClient from "@/interceptors/auth.interceptor";
 
 const MovementService = {
   // Método para obtener todos los movimientos
-  async getAllMovements() {
+  async getAllMovements(page = 1, limit = 10) {
     try {
-      const response = await apiClient.get("/movements/getMovements");
+      const response = await apiClient.get(
+        `/movements/getMovements?page=${page}&limit=${limit}`
+      );
       return response.data;
     } catch (error) {
       throw this.handleError(error);

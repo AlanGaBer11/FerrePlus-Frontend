@@ -2,9 +2,11 @@ import apiClient from "@/interceptors/auth.interceptor";
 
 const ProductService = {
   // Método para obtener todos los productos
-  async getAllProducts() {
+  async getAllProducts(page = 1, limit = 10) {
     try {
-      const response = await apiClient.get("/products/getProducts");
+      const response = await apiClient.get(
+        `/products/getProducts?page=${page}&limit=${limit}`
+      );
       return response.data;
     } catch (error) {
       throw this.handleError(error);

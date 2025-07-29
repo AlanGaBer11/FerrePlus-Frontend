@@ -12,6 +12,7 @@ import {
 import { Button } from "../../components/ui/button";
 import CreateUserDialog from "@/components/users/CreateUserDialog";
 import UpdateUserDialog from "@/components/users/UpdateUserDialog";
+import Pagination from "@/components/Pagination";
 import UserService from "@/services/users/UserService";
 import ToastService from "@/services/toast/ToastService";
 
@@ -20,31 +21,52 @@ const UserList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Cargar los usuarios al montar el componente
-  const fetchUsers = async () => {
+  // Estados para paginación
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [usersPerPage, setUsersPerPage] = useState(10);
+
+  // Cargar los usuarios con paginación
+  const fetchUsers = async (page = 1, limit = 10) => {
     try {
       setLoading(true);
-      const response = await UserService.getAllUsers();
-      // Verifica si response.users existe
-      if (response?.users) {
+      const response = await UserService.getAllUsers(page, limit);
+
+      // Verificar si response.users existe
+      if (response?.users && response?.pagination) {
+        // Debug
+
         setUsers(response.users);
+        setCurrentPage(response.pagination.currentPage);
+        setTotalPages(response.pagination.totalPages);
+        setTotalUsers(response.pagination.totalUsers);
+        setUsersPerPage(response.pagination.usersPerPage);
+        setError(null);
       } else {
         console.error("Formato de respuesta inesperado:", response);
         setError("Formato de respuesta inesperado");
-        setUsers([]); // Asegurarnos que users es un array vacío en caso de error
+        setUsers([]);
       }
     } catch (error) {
       console.error("Error al obtener los usuarios", error);
       setError(error.message || "Error al obtener los usuarios");
-      setUsers([]); // Asegurarnos que users es un array vacío en caso de error
+      setUsers([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []); // Array vacío para que solo se ejecute una vez al montar el componente
+    fetchUsers(1, 10); // Cargar primera página al montar el componente
+  }, []);
+
+  // Función para cambiar de página
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages && page !== currentPage) {
+      fetchUsers(page, usersPerPage);
+    }
+  };
 
   // Función para eliminar un usuario
   const handleDelete = async (userId) => {
@@ -58,8 +80,9 @@ const UserList = () => {
           setLoading(true);
           try {
             await UserService.deleteUser(userId);
-            setUsers(users.filter((user) => user.id_user !== userId));
-            return { success: true }; // Devolver un valor para indicar éxito
+            // Recargar la página actual después de eliminar
+            await fetchUsers(currentPage, usersPerPage);
+            return { success: true };
           } finally {
             setLoading(false);
           }
@@ -73,60 +96,91 @@ const UserList = () => {
     }
   };
 
+  // Función para refrescar después de crear/actualizar usuario
+  const handleUserChange = () => {
+    fetchUsers(currentPage, usersPerPage);
+  };
+
   return (
     <div className="list-container">
       <div className="top">
         <h1>Gestión de Usuarios</h1>
-        <div>
-          <CreateUserDialog onUserCreated={fetchUsers} />
+        <div className="flex gap-4 items-center">
+          <CreateUserDialog onUserCreated={handleUserChange} />
         </div>
       </div>
+
+      {/* Información de paginación */}
+      {totalUsers > 0 && (
+        <div className="text-sm text-gray-600 mb-4">
+          Mostrando {(currentPage - 1) * usersPerPage + 1} -{" "}
+          {Math.min(currentPage * usersPerPage, totalUsers)} de {totalUsers}{" "}
+          usuarios
+        </div>
+      )}
+
       {loading && <p>Cargando Usuarios...</p>}
       {error && <p className="text-error">{error}</p>}
 
       {users && users.length > 0 ? (
-        <Table>
-          <TableCaption className="table-caption">
-            Lista de Usuarios
-          </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="table-head">ID</TableHead>
-              <TableHead className="table-head">Nombre</TableHead>
-              <TableHead className="table-head">Email</TableHead>
-              <TableHead className="table-head">Rol</TableHead>
-              <TableHead className="table-head">Verificado</TableHead>
-              <TableHead className="table-head">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow className="table-row" key={user.id_user || user.email}>
-                <TableCell className=" table-cell font-medium">
-                  {user.id_user}
-                </TableCell>
-                <TableCell className="table-cell">{user.name}</TableCell>
-                <TableCell className="table-cell">{user.email}</TableCell>
-                <TableCell className="table-cell">{user.role}</TableCell>
-                <TableCell className="table-cell">
-                  {user.verified ? "Sí" : "No"}
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-4 justify-center">
-                    <UpdateUserDialog user={user} onUserUpdated={fetchUsers} />
-                    <Button
-                      className="delete-btn"
-                      onClick={() => handleDelete(user.id_user)}
-                      disabled={loading}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                </TableCell>
+        <>
+          <Table>
+            <TableCaption className="table-caption">
+              Lista de Usuarios
+            </TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="table-head">ID</TableHead>
+                <TableHead className="table-head">Nombre</TableHead>
+                <TableHead className="table-head">Email</TableHead>
+                <TableHead className="table-head">Rol</TableHead>
+                <TableHead className="table-head">Verificado</TableHead>
+                <TableHead className="table-head">Acciones</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow
+                  className="table-row"
+                  key={user.id_user || user.email}
+                >
+                  <TableCell className="table-cell font-medium">
+                    {user.id_user}
+                  </TableCell>
+                  <TableCell className="table-cell">{user.name}</TableCell>
+                  <TableCell className="table-cell">{user.email}</TableCell>
+                  <TableCell className="table-cell">{user.role}</TableCell>
+                  <TableCell className="table-cell">
+                    {user.verified ? "Sí" : "No"}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-4 justify-center">
+                      <UpdateUserDialog
+                        user={user}
+                        onUserUpdated={handleUserChange}
+                      />
+                      <Button
+                        className="delete-btn"
+                        onClick={() => handleDelete(user.id_user)}
+                        disabled={loading}
+                      >
+                        Eliminar
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+
+          {/* Componente de paginación */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            disabled={loading}
+          />
+        </>
       ) : (
         !loading && <p>No hay usuarios disponibles</p>
       )}

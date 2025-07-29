@@ -99,9 +99,11 @@ const UserService = {
 
   /* SOLO ADMIN */
   // MÉTODO PARA OBTENER TODOS LOS USUARIOS
-  async getAllUsers() {
+  async getAllUsers(page = 1, limit = 10) {
     try {
-      const response = await apiClient.get("/users/getUsers");
+      const response = await apiClient.get(
+        `/users/getUsers?page=${page}&limit=${limit}`
+      );
       return response.data;
     } catch (error) {
       throw this.handleError(error);

@@ -1,9 +1,11 @@
 import apiClient from "@/interceptors/auth.interceptor";
 const SupplierService = {
   // Método para obtener todos los proveedores
-  async getAllSuppliers() {
+  async getAllSuppliers(page = 1, limit = 10) {
     try {
-      const response = await apiClient.get("/suppliers/getSuppliers");
+      const response = await apiClient.get(
+        `/suppliers/getSuppliers?page=${page}&limit=${limit}`
+      );
       return response.data;
     } catch (error) {
       throw this.handleError(error);

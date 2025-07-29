@@ -10,7 +10,7 @@ const DashboardHome = () => {
       <div className="flex justify-center w-full my-6">
         <WeatherCard />
       </div>
-      {/* Aquí puedes agregar más contenido del dashboard home */}
+      {/* Agregar mas tarjetas de información (Charts)*/}
     </div>
   );
 };
