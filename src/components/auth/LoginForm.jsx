@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
-import UserService from "@/services/users/UserService";
+import AuthService from "@/services/auth/authService";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const LoginForm = () => {
       setLoading(true);
 
       // Llamar al servicio de inicio de sesión
-      const response = await UserService.login({
+      await AuthService.login({
         email: data.email,
         password: data.password,
       });
@@ -43,7 +43,7 @@ const LoginForm = () => {
       ToastService.success("Inicio de sesión exitoso");
 
       // Redireccionar según el rol del usuario
-      if (UserService.isAdmin()) {
+      if (AuthService.isAdmin()) {
         navigate("/admin/dashboard");
       } else {
         navigate("/");

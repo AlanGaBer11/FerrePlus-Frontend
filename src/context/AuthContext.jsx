@@ -1,26 +1,26 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import UserService from "@/services/users/UserService";
+import AuthService from "@/services/auth/AuthService";
 
 // Crear el contexto
 const AuthContext = createContext();
 
 // Proveedor que contiene la lógica de autenticación
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(UserService.isAuthenticated());
-  const [isAdmin, setIsAdmin] = useState(UserService.isAdmin());
-  const [user, setUser] = useState(UserService.getUserData());
+  const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isAuthenticated());
+  const [isAdmin, setIsAdmin] = useState(AuthService.isAdmin());
+  const [user, setUser] = useState(AuthService.getUserData());
 
   // Función para actualizar el estado de autenticación
   const updateAuth = () => {
-    setIsLoggedIn(UserService.isAuthenticated());
-    setIsAdmin(UserService.isAdmin());
-    setUser(UserService.getUserData());
+    setIsLoggedIn(AuthService.isAuthenticated());
+    setIsAdmin(AuthService.isAdmin());
+    setUser(AuthService.getUserData());
   };
 
   // Inicializar estado
   useEffect(() => {
     // Suscribirse a cambios de autenticación
-    const unsubscribe = UserService.onAuthChange(() => {
+    const unsubscribe = AuthService.onAuthChange(() => {
       updateAuth();
     });
 

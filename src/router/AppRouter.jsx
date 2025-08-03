@@ -10,13 +10,14 @@ import ProductList from "@/pages/ADMIN/ProductList";
 import MovementList from "@/pages/ADMIN/MovementList";
 import NotFound from "@/pages/error/NotFound";
 import Unauthorized from "@/pages/error/Unauthorized";
+import ProductsHome from "@/pages/ProductsHome";
 
 const AppRouter = () => {
   return (
     <Routes>
       {/* RUTAS PÚBLICAS */}
       <Route path="/" element={<h1>Welcome to FerrePlus</h1>} />
-      <Route path="/products" element={<h1>Products Page</h1>} />
+      <Route path="/products" element={<ProductsHome />} />
       <Route path="/suppliers" element={<h1>Suppliers Page</h1>} />
       <Route path="/movements" element={<h1>Movements Page</h1>} />
       <Route path="/signup" element={<SignUpForm />} />

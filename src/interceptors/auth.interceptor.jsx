@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import UserService from "@/services/users/UserService";
+import AuthService from "@/services/auth/authService";
 import ToastService from "@/services/toast/ToastService";
 
 const API_URL = import.meta.env.VITE_BASE_URL_LOCAL;
@@ -48,7 +48,7 @@ const apiClient = axios.create({
 // INTERCEPTOR PARA AGREGAR EL TOKEN A LAS SOLICITUDES
 apiClient.interceptors.request.use(
   function (config) {
-    const token = UserService.getToken();
+    const token = AuthService.getToken();
     // VERIFICAR SI LA RUTA REQUIERE AUTENTICACIÓN
     const requireAuth = AUTH_ROUTES.some((path) => config.url.includes(path));
 

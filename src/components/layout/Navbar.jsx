@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import "@/styles/navbar.css";
 import logo from "@/assets/logo.png";
-import UserService from "@/services/users/UserService";
+import AuthService from "@/services/auth/authService";
 import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   // Función para cerrar sesión
   const handleLogout = () => {
-    UserService.logout(); // Llama al servicio y actualiza el contexto automáticamente
+    AuthService.logout(); // Llama al servicio y actualiza el contexto automáticamente
     navigate("/login");
     setShowUserMenu(false);
   };

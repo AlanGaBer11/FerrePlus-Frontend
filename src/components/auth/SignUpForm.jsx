@@ -4,7 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import PasswordChecklist from "react-password-checklist";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
-import UserService from "@/services/users/UserService";
+import AuthService from "@/services/auth/authService";
 import MarkdownDialog from "@/components/MarkdownDialog";
 
 const SignUpForm = () => {
@@ -88,7 +88,7 @@ const SignUpForm = () => {
       setLoading(true);
 
       // Llamar al servicio de registro
-      await UserService.register(userData);
+      await AuthService.register(userData);
 
       ToastService.success("Registro exitoso. ¡Bienvenido!");
       navigate("/login");
