@@ -68,6 +68,31 @@ const AuthService = {
       throw this.handleError(error);
     }
   },
+  // MÉTODO PARA SOLICITAR RESETEO DE CONTRASEÑA
+  async requestPasswordReset(email) {
+    try {
+      const response = await apiClient.post("/auth/request-password-reset", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
+  // MÉTODO PARA RESETEAR CONTRASEÑA
+  async resetPassword(email, token, newPassword) {
+    try {
+      const response = await apiClient.post("/auth/reset-password", {
+        email,
+        token,
+        newPassword,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
 
   // GUARDAR EL TOKEN Y DATO DE DEL UUARIO EN COOKIES
   saveToken(token, userData) {

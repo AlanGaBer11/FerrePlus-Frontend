@@ -14,6 +14,8 @@ import Home from "@/pages/home";
 import ProductsHome from "@/pages/ProductsHome";
 import We from "@/pages/About";
 import Profile from "@/pages/Profile";
+import RequestResetForm from "@/components/auth/RequestResetForm";
+import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
 
 const AppRouter = () => {
   return (
@@ -32,6 +34,8 @@ const AppRouter = () => {
         element={<h1>Terms and Conditions Page</h1>}
       />
       <Route path="privacy-policy" element={<h1>Privacy Policy Page</h1>} />
+      <Route path="/forgot-password" element={<RequestResetForm />} />
+      <Route path="/reset-password" element={<ResetPasswordForm />} />
 
       {/* RUTAS DE ADMINISTRADOR */}
       <Route path="/admin" element={<ProtectedRoute requiredRole={"ADMIN"} />}>
