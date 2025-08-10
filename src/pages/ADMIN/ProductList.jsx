@@ -61,7 +61,7 @@ const ProductList = () => {
   // Función para cambiar de página
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages && page !== currentPage) {
-      fetchUsers(page, productsPerPage);
+      fetchProducts(page, productsPerPage);
     }
   };
 

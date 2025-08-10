@@ -34,16 +34,13 @@ const Navbar = () => {
           </Link>
           <ul className="links">
             <li>
-              <Link to="/">Inicio</Link>
+              <Link to="/inicio">Inicio</Link>
             </li>
             <li>
-              <Link to="/products">Productos</Link>
+              <Link to="/productos">Productos</Link>
             </li>
             <li>
-              <Link to="/suppliers">Proveedores</Link>
-            </li>
-            <li>
-              <Link to="/movements">Movimientos</Link>
+              <Link to="/nosotros">Nosotros</Link>
             </li>
 
             {!isLoggedIn ? (
@@ -62,7 +59,7 @@ const Navbar = () => {
                 {showUserMenu && (
                   <ul className="user-dropdown">
                     <li>
-                      <Link to="/profile">Perfil</Link>
+                      <Link to="/perfil">Perfil</Link>
                     </li>
                     {isAdmin && (
                       <li>

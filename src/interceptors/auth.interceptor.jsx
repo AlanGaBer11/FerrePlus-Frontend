@@ -13,6 +13,8 @@ const AUTH_ROUTES = [
   "/users/createUser", //ADMIN
   "/users/updateUser",
   "/users/deleteUser", // ADMIN
+  "/users/deactivateUser",
+  "/users/reactivateUser", // ADMIN
 
   /* PROVEEDORES */
   "/suppliers/getSuppliers",

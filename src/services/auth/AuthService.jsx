@@ -44,6 +44,31 @@ const AuthService = {
     }
   },
 
+  // MÉTODO PARA ENVIAR CÓDIGO DE VERIFICACIÓN
+  async sendCode(email) {
+    try {
+      const response = await apiClient.post("/auth/send-verification-code", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
+  // MÉTODO PARA VERIFICAR CUENTA
+  async verifyAccount(email, code) {
+    try {
+      const response = await apiClient.post("/auth/verify-account", {
+        email,
+        code,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
   // GUARDAR EL TOKEN Y DATO DE DEL UUARIO EN COOKIES
   saveToken(token, userData) {
     Cookies.set("token", token, { expires: 1, path: "/" }); // EXPIRA EN 1 DIA

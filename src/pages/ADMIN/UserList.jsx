@@ -10,6 +10,7 @@ import {
   TableCaption,
 } from "@/components/ui/table";
 import { Button } from "../../components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import CreateUserDialog from "@/components/users/CreateUserDialog";
 import UpdateUserDialog from "@/components/users/UpdateUserDialog";
 import Pagination from "@/components/Pagination";
@@ -134,6 +135,7 @@ const UserList = () => {
                 <TableHead className="table-head">Nombre</TableHead>
                 <TableHead className="table-head">Email</TableHead>
                 <TableHead className="table-head">Rol</TableHead>
+                <TableHead className="table-head">Estado</TableHead>
                 <TableHead className="table-head">Verificado</TableHead>
                 <TableHead className="table-head">Acciones</TableHead>
               </TableRow>
@@ -151,6 +153,25 @@ const UserList = () => {
                   <TableCell className="table-cell">{user.email}</TableCell>
                   <TableCell className="table-cell">{user.role}</TableCell>
                   <TableCell className="table-cell">
+                    <div className="flex justify-center">
+                      {user.status ? (
+                        <Badge
+                          variant="default"
+                          className="bg-green-500 hover:bg-green-600"
+                        >
+                          Activo
+                        </Badge>
+                      ) : (
+                        <Badge
+                          variant="destructive"
+                          className="bg-red-500 hover:bg-red-600"
+                        >
+                          Inactivo
+                        </Badge>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell className="table-cell">
                     {user.verified ? "Sí" : "No"}
                   </TableCell>
                   <TableCell>
@@ -166,6 +187,7 @@ const UserList = () => {
                       >
                         Eliminar
                       </Button>
+                      <Button>Reactivar</Button>
                     </div>
                   </TableCell>
                 </TableRow>

@@ -57,6 +57,25 @@ const UserService = {
     }
   },
 
+  // MÉTODO PARA DESACTIVAR UNA CUENTA
+  async deactivateUser(id) {
+    try {
+      const response = await apiClient.patch(`/users/deactivateUser/${id}`);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+  // MÉTODO PARA DESACTIVAR UNA CUENTA
+  async reactivateUser(id) {
+    try {
+      const response = await apiClient.patch(`/users/reactivateUser/${id}`);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  },
+
   // MANEJO UNIFORME DE ERRORES
   handleError(error) {
     let errorMessage = "Error desconocido";
