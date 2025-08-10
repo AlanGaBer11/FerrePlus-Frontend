@@ -9,12 +9,29 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(AuthService.isAuthenticated());
   const [isAdmin, setIsAdmin] = useState(AuthService.isAdmin());
   const [user, setUser] = useState(AuthService.getUserData());
+  const [isVerified, setIsVerified] = useState(user?.verified || false);
 
   // Función para actualizar el estado de autenticación
   const updateAuth = () => {
     setIsLoggedIn(AuthService.isAuthenticated());
     setIsAdmin(AuthService.isAdmin());
-    setUser(AuthService.getUserData());
+    const userData = AuthService.getUserData();
+    setUser(userData);
+    setIsVerified(userData?.verified || false);
+  };
+
+  // Función para cerrar sesión
+  const logout = () => {
+    AuthService.logout();
+    updateAuth();
+  };
+
+  // Función para actualizar datos del usuario
+  const updateUserData = (newData) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...newData,
+    }));
   };
 
   // Inicializar estado
@@ -30,11 +47,17 @@ export const AuthProvider = ({ children }) => {
     };
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, isAdmin, user }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    isLoggedIn,
+    isAdmin,
+    isVerified,
+    user,
+    logout,
+    updateAuth,
+    updateUserData,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

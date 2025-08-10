@@ -10,6 +10,8 @@ import ProductList from "@/pages/ADMIN/ProductList";
 import MovementList from "@/pages/ADMIN/MovementList";
 import NotFound from "@/pages/error/NotFound";
 import Unauthorized from "@/pages/error/Unauthorized";
+import NotVerified from "@/pages/error/NotVerified";
+import NotActivate from "@/pages/error/NotActivate";
 import Home from "@/pages/home";
 import ProductsHome from "@/pages/ProductsHome";
 import We from "@/pages/About";
@@ -31,6 +33,8 @@ const AppRouter = () => {
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route path="/not-verified" element={<NotVerified />} />
+      <Route path="/not-activate" element={<NotActivate />} />
       <Route path="/forgot-password" element={<RequestResetForm />} />
       <Route path="/reset-password" element={<ResetPasswordForm />} />
       <Route path="/send-code" element={<SendCode />} />

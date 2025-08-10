@@ -6,7 +6,7 @@ const NotFound = () => {
     <div className="error-page">
       <div className="error-container">
         <div className="error-icon">
-          <i className="fi fi-rs-map-marker"></i>
+          <i className="fi fi-rr-map-marker"></i>
         </div>
         <h1>Error 404</h1>
         <h2>Ruta no encontrada</h2>
