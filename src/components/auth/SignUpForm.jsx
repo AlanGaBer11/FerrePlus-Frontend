@@ -84,20 +84,24 @@ const SignUpForm = () => {
       captcha: captchaValue,
     };
 
-    try {
-      setLoading(true);
-
-      // Llamar al servicio de registro
-      await AuthService.register(userData);
-
-      ToastService.success("Registro exitoso. ¡Bienvenido!");
-      navigate("/login");
-    } catch (error) {
-      ToastService.error(error.message || "Error al registrar usuario");
-      console.error("Error al registrar:", error);
-    } finally {
-      setLoading(false);
-    }
+    ToastService.promise(
+      (async () => {
+        setLoading(true);
+        try {
+          await AuthService.register(userData);
+          // Redirigir a la página de envío de código después del registro
+          navigate(`/send-code?email=${userData.email}`);
+          return { success: true };
+        } finally {
+          setLoading(false);
+        }
+      })(),
+      {
+        loading: "Registrando usuario...",
+        success: "Registro exitoso. Por favor verifica tu cuenta.",
+        error: "Error al registrar usuario",
+      }
+    );
   }
 
   return (

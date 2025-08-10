@@ -16,6 +16,8 @@ import We from "@/pages/About";
 import Profile from "@/pages/Profile";
 import RequestResetForm from "@/components/auth/RequestResetForm";
 import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
+import SendCode from "@/components/auth/SendCode";
+import VerifiAccount from "@/components/auth/VerifiAccount";
 
 const AppRouter = () => {
   return (
@@ -29,13 +31,10 @@ const AppRouter = () => {
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route
-        path="/terms-conditions"
-        element={<h1>Terms and Conditions Page</h1>}
-      />
-      <Route path="privacy-policy" element={<h1>Privacy Policy Page</h1>} />
       <Route path="/forgot-password" element={<RequestResetForm />} />
       <Route path="/reset-password" element={<ResetPasswordForm />} />
+      <Route path="/send-code" element={<SendCode />} />
+      <Route path="/verify-account" element={<VerifiAccount />} />
 
       {/* RUTAS DE ADMINISTRADOR */}
       <Route path="/admin" element={<ProtectedRoute requiredRole={"ADMIN"} />}>
