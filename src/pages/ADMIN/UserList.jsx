@@ -96,6 +96,33 @@ const UserList = () => {
       );
     }
   };
+  // Función para reactivar un usuario
+  const handleReactivate = async (userId) => {
+    if (
+      window.confirm(
+        `¿Estás seguro que deseas reactivar al usuario con ID: ${userId}?`
+      )
+    ) {
+      ToastService.promise(
+        (async () => {
+          setLoading(true);
+          try {
+            await UserService.reactivateUser(userId);
+            // Recargar la página actual después de reactivar
+            await fetchUsers(currentPage, usersPerPage);
+            return { success: true };
+          } finally {
+            setLoading(false);
+          }
+        })(),
+        {
+          loading: "Reactivando usuario...",
+          success: "Usuario reactivado correctamente",
+          error: "No se pudo reactivar el usuario",
+        }
+      );
+    }
+  };
 
   // Función para refrescar después de crear/actualizar usuario
   const handleUserChange = () => {
@@ -187,7 +214,9 @@ const UserList = () => {
                       >
                         Eliminar
                       </Button>
-                      <Button>Reactivar</Button>
+                      <Button onClick={() => handleReactivate(user.id_user)}>
+                        Reactivar
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>

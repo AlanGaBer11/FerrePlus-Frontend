@@ -13,7 +13,7 @@ import Unauthorized from "@/pages/error/Unauthorized";
 import Home from "@/pages/home";
 import ProductsHome from "@/pages/ProductsHome";
 import We from "@/pages/About";
-import Perfil from "@/pages/Perfil";
+import Profile from "@/pages/Profile";
 
 const AppRouter = () => {
   return (
@@ -23,7 +23,7 @@ const AppRouter = () => {
       <Route path="/inicio" element={<Home />} />
       <Route path="/productos" element={<ProductsHome />} />
       <Route path="/nosotros" element={<We />} />
-      <Route path="/perfil" element={<Perfil />} />
+      <Route path="/perfil" element={<Profile />} />
       <Route path="/signup" element={<SignUpForm />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
