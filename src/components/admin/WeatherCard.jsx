@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 
 const WeatherCard = () => {
   const [weather, setWeather] = useState(null);
