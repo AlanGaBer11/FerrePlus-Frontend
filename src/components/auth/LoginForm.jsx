@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
 import AuthService from "@/services/auth/authService";
