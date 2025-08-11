@@ -12,7 +12,7 @@ import NotFound from "@/pages/error/NotFound";
 import Unauthorized from "@/pages/error/Unauthorized";
 import NotVerified from "@/pages/error/NotVerified";
 import NotActivate from "@/pages/error/NotActivate";
-import Home from "@/pages/Home";
+import Home from "@/pages/home";
 import ProductsHome from "@/pages/ProductsHome";
 import We from "@/pages/About";
 import Profile from "@/pages/Profile";

@@ -26,10 +26,10 @@ const Navbar = () => {
     <div>
       <header>
         <nav className="menu">
-          <Link to="/inicio">
+          <Link to="/">
             <img src={logo} alt="Logo FerrePlus" />
           </Link>
-          <Link to="/inicio" className="title-link">
+          <Link to="/" className="title-link">
             <h1>FerrePlus</h1>
           </Link>
           <ul className="links">
