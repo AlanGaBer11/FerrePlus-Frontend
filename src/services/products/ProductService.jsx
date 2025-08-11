@@ -1,4 +1,7 @@
 import apiClient from "@/interceptors/auth.interceptor";
+import { notificationStore } from "@/stores/NotificationStore";
+
+const STOCK_THRESHOLD = 10;
 
 const ProductService = {
   // Método para obtener todos los productos
@@ -43,6 +46,19 @@ const ProductService = {
         `/products/updateProduct/${productId}`,
         productData
       );
+
+      // Verificar si el stock está bajo después de la actualización
+      if (productData.stock && productData.stock < STOCK_THRESHOLD) {
+        notificationStore.notify({
+          type: "lowStock",
+          message: `¡Alerta! El producto ${
+            productData.name || "ID: " + productId
+          } tiene stock bajo (${productData.stock} unidades)`,
+          productId: productId,
+          stock: productData.stock,
+        });
+      }
+
       return response.data;
     } catch (error) {
       throw this.handleError(error);

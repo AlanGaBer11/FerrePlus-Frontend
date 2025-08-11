@@ -43,7 +43,7 @@ const RecentMovementsCard = () => {
                       {movement.product?.name}
                     </span>
                     <span className="text-sm text-gray-500">
-                      {formatDate(movement.createdAt)}
+                      {formatDate(movement.date)} {/* CORREGIDO: usar date */}
                     </span>
                   </div>
                   <span

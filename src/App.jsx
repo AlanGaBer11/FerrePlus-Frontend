@@ -3,6 +3,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import AppRouter from "@/router/AppRouter";
 import Navbar from "@/components/layout/Navbar";
 import ToastContainer from "@/components/ToastContainer";
+import NotificationList from "@/components/notifications/NotificationList";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <main>
           <AppRouter />
         </main>
+        <NotificationList />
         <ToastContainer />
       </BrowserRouter>
     </AuthProvider>

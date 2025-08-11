@@ -1,68 +1,92 @@
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import useMovementStore from "@/context/MovementContext";
-import { formatDate } from "@/lib/utils";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-const RecentMovementsCard = () => {
+const MovementsChart = () => {
   const { movements, loading, fetchMovements } = useMovementStore();
 
   useEffect(() => {
     fetchMovements();
   }, [fetchMovements]);
 
-  const recentMovements = movements.slice(0, 5); // Mostrar solo los últimos 5
-
   if (loading) {
     return (
-      <Card className="w-full">
+      <Card className="w-full h-[400px]">
         <CardContent className="p-6">
-          <p>Cargando movimientos...</p>
+          <p>Cargando gráfico...</p>
         </CardContent>
       </Card>
     );
   }
 
+  // Procesar datos para el gráfico - CORREGIDO
+  const chartData = movements.reduce((acc, movement) => {
+    // Usar 'date' en lugar de 'createdAt'
+    const date = new Date(movement.date).toLocaleDateString();
+    const existing = acc.find((item) => item.date === date);
+
+    if (existing) {
+      // Usar "Entrada" y "Salida" (como viene de la API)
+      if (movement.type === "Entrada") {
+        existing.entradas += movement.quantity;
+      } else if (movement.type === "Salida") {
+        existing.salidas += movement.quantity;
+      }
+    } else {
+      acc.push({
+        date,
+        entradas: movement.type === "Entrada" ? movement.quantity : 0,
+        salidas: movement.type === "Salida" ? movement.quantity : 0,
+      });
+    }
+
+    return acc;
+  }, []);
+
+  // Debugging: mostrar los datos procesados
+  console.log("Movements from API:", movements);
+  console.log("Processed chart data:", chartData);
+
   return (
-    <Card className="w-full" style={{ padding: "20px" }}>
+    <Card className="w-full h-[400px]" style={{ padding: "20px" }}>
       <CardHeader>
-        <CardTitle className="text-xl font-bold">Últimos Movimientos</CardTitle>
+        <CardTitle className="text-xl font-bold">Movimientos del Mes</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          {recentMovements.length === 0 ? (
-            <p className="text-gray-500">No hay movimientos recientes</p>
-          ) : (
-            <div className="grid gap-2">
-              {recentMovements.map((movement) => (
-                <div
-                  key={movement.id_movement}
-                  className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-medium">
-                      {movement.product?.name}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {formatDate(movement.date)} {/* CORREGIDO: usar date */}
-                    </span>
-                  </div>
-                  <span
-                    className={`font-bold ${
-                      movement.type === "Entrada"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
-                  >
-                    {movement.type}: {movement.quantity}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="entradas"
+              stroke="#4ade80"
+              name="Entradas"
+            />
+            <Line
+              type="monotone"
+              dataKey="salidas"
+              stroke="#f87171"
+              name="Salidas"
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );
 };
 
-export default RecentMovementsCard;
+export default MovementsChart;

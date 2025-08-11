@@ -1,12 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import useProductStore from "@/context/ProductContext";
+import { notificationStore } from "@/stores/NotificationStore";
 
 const LowStockCard = () => {
   const { products, loading, fetchProducts } = useProductStore();
+  const [hasNewNotification, setHasNewNotification] = useState(false);
 
   useEffect(() => {
     fetchProducts();
+
+    const handleNotification = () => {
+      setHasNewNotification(true);
+      // Recargar los productos cuando hay una nueva notificación
+      fetchProducts();
+    };
+
+    notificationStore.subscribe(handleNotification);
+
+    return () => {
+      notificationStore.unsubscribe(handleNotification);
+    };
   }, [fetchProducts]);
 
   const lowStockProducts = products.filter((product) => product.stock < 10);
