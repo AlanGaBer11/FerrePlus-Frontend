@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import AuthService from "@/services/auth/authService";
+import AuthService from "@/services/auth/AuthService";
 import ToastService from "@/services/toast/ToastService";
 
 const API_URL = import.meta.env.VITE_BASE_URL_LOCAL;
