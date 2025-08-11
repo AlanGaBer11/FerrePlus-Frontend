@@ -4,7 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import PasswordChecklist from "react-password-checklist";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
-import AuthService from "@/services/auth/authService";
+import AuthService from "@/services/auth/AuthService";
 import MarkdownDialog from "@/components/MarkdownDialog";
 
 const SignUpForm = () => {

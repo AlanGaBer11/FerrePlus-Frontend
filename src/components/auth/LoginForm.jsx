@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
-import AuthService from "@/services/auth/authService";
+import AuthService from "@/services/auth/AuthService";
 
 const LoginForm = () => {
   const navigate = useNavigate();
