@@ -26,5 +26,3 @@ react-key.pem
 *.njsproj
 *.sln
 *.sw?
-
-.vercel
