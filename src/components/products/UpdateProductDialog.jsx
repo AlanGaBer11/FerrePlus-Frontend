@@ -40,14 +40,14 @@ const UpdateProductDialog = ({ product, onProductUpdated }) => {
   const {
     suppliers,
     loading: suppliersLoading,
-    fetchSuppliers,
+    fetchAllSuppliers,
   } = useSupplierStore();
 
   useEffect(() => {
     if (open) {
-      fetchSuppliers();
+      fetchAllSuppliers();
     }
-  }, [open, fetchSuppliers]);
+  }, [open, fetchAllSuppliers]);
 
   const handleChange = (e) => {
     setData({

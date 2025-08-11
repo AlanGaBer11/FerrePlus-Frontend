@@ -35,7 +35,7 @@ const RecentMovementsCard = () => {
             <div className="grid gap-2">
               {recentMovements.map((movement) => (
                 <div
-                  key={movement.id}
+                  key={movement.id_movement}
                   className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
                 >
                   <div className="flex flex-col">
@@ -48,7 +48,7 @@ const RecentMovementsCard = () => {
                   </div>
                   <span
                     className={`font-bold ${
-                      movement.type === "ENTRADA"
+                      movement.type === "Entrada"
                         ? "text-green-600"
                         : "text-red-600"
                     }`}

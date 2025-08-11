@@ -29,16 +29,16 @@ const CreateMovementDialog = ({ onMovementCreated }) => {
   const {
     products,
     loading: productsLoading,
-    fetchProducts,
+    fetchAllProducts,
   } = useProductStore();
 
-  const { users, loading: usersLoading, fetchUsers } = useUserStore();
+  const { users, loading: usersLoading, fetchAllUsers } = useUserStore();
   useEffect(() => {
     if (open) {
-      fetchProducts();
-      fetchUsers();
+      fetchAllProducts();
+      fetchAllUsers();
     }
-  }, [open, fetchProducts, fetchUsers]);
+  }, [open, fetchAllProducts, fetchAllUsers]);
 
   const handleChange = (e) => {
     setData({

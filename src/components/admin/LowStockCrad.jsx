@@ -36,7 +36,7 @@ const LowStockCard = () => {
             <div className="grid gap-2">
               {lowStockProducts.map((product) => (
                 <div
-                  key={product.id}
+                  key={product.id_product}
                   className="flex items-center justify-between p-2 bg-red-50 rounded-lg"
                 >
                   <span className="font-medium">{product.name}</span>
