@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "@/router/ProtectedRoute";
 import SignUpForm from "@/components/auth/SignUpForm";
 import LoginForm from "@/components/auth/LoginForm";

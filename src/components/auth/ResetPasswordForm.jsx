@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import AuthService from "@/services/auth/AuthService";
 import ToastService from "@/services/toast/ToastService";
 import PasswordChecklist from "react-password-checklist";

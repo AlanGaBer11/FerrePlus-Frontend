@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { Ban } from "lucide-react";
 import UserService from "@/services/users/UserService";
