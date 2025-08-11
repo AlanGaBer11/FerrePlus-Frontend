@@ -7,7 +7,12 @@ const Dashboard = () => {
     <SidebarProvider>
       <div
         className="dashboard-container"
-        style={{ display: "flex", width: "100%", height: "100vh" }}
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100vh",
+          marginLeft: "150px",
+        }}
       >
         <AppSidebar />
 
@@ -19,8 +24,6 @@ const Dashboard = () => {
             padding: "20px",
           }}
         >
-          {/* Boton para alternar la barra lateral */}
-          <SidebarTrigger />
           <div
             style={{
               border: "1px solid #ccc",
