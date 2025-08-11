@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import AuthService from "@/services/auth/AuthService";
 import ToastService from "@/services/toast/ToastService";
 
-const API_URL = import.meta.env.VITE_BASE_URL_LOCAL;
+const API_URL = import.meta.env.VITE_BASE_URL_PROD;
 
 // RUTAS QUE REQUIERES AUTENTICACIÓN
 const AUTH_ROUTES = [
