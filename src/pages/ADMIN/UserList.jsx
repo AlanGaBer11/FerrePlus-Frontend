@@ -16,6 +16,7 @@ import UpdateUserDialog from "@/components/users/UpdateUserDialog";
 import Pagination from "@/components/Pagination";
 import UserService from "@/services/users/UserService";
 import ToastService from "@/services/toast/ToastService";
+import DeactivateAccount from "@/components/users/DeactivateAccount";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
