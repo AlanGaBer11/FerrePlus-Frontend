@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "@/styles/authForms.css";
 import ToastService from "@/services/toast/ToastService";
 import AuthService from "@/services/auth/AuthService";
+import { useAuth } from "@/context/AuthContext";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [shown, setShown] = useState(false);
 
@@ -35,18 +37,31 @@ const LoginForm = () => {
       setLoading(true);
 
       // Llamar al servicio de inicio de sesión
-      await AuthService.login({
+      const response = await AuthService.login({
         email: data.email,
         password: data.password,
       });
 
+      const userData = response.user;
+
+      // Verificar estado del usuario usando la respuesta directa
+      if (!userData.verified) {
+        navigate("/not-verified");
+        return;
+      }
+
+      if (!userData.status) {
+        navigate("/not-activate");
+        return;
+      }
+
       ToastService.success("Inicio de sesión exitoso");
 
       // Redireccionar según el rol del usuario
-      if (AuthService.isAdmin()) {
+      if (userData.role === "ADMIN") {
         navigate("/admin/dashboard");
       } else {
-        navigate("/");
+        navigate("/inicio");
       }
     } catch (error) {
       ToastService.error(error.message || "Error al iniciar sesión");

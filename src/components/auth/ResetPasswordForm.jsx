@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { Button } from "../ui/button";
 import { Input } from "@/components/ui/input";
 import AuthService from "@/services/auth/AuthService";
 import ToastService from "@/services/toast/ToastService";
@@ -62,7 +63,7 @@ const ResetPasswordForm = () => {
       <h2 className="text-2xl font-bold mb-6 text-center">
         Resetear Contraseña
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form className="space-y-4">
         <Input
           type="text"
           placeholder="Código de verificación"
@@ -124,6 +125,9 @@ const ResetPasswordForm = () => {
           }}
         />
       </form>
+      <Button onClick={handleSubmit} disabled={loading}>
+        {loading ? "Actualizando..." : "Actualizar Contraseña"}
+      </Button>
     </div>
   );
 };
